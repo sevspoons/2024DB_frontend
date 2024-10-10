@@ -1,5 +1,7 @@
 import { http } from "@/utils/http";
+import { baseUrlApi } from "./baseurl";
 
+//定义的用户登录请求返回值,咱们不用这么多,可以删掉很多
 export type UserResult = {
   success: boolean;
   data: {
@@ -36,10 +38,15 @@ export type RefreshTokenResult = {
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  //请求发出,baseUrlApi自动拼接url,http自动拼接参数
+  return http.request<UserResult>("post", baseUrlApi("/login"), { data });
 };
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", "/refresh-token", { data });
+  return http.request<RefreshTokenResult>(
+    "post",
+    baseUrlApi("/refresh-token"),
+    { data }
+  );
 };

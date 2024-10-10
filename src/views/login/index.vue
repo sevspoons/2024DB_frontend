@@ -32,6 +32,7 @@ const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
 const { title } = useNav();
 
+//获取用户输入的用户名和密码
 const ruleForm = reactive({
   username: "",
   password: ""
@@ -45,6 +46,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       //前端基本检测通过,登录按钮置为loading状态
       loading.value = true;
+      //获取用户仓库钩子调用登录操作
       useUserStoreHook()
         //使用用户名与密码登录
         .loginByUsername({

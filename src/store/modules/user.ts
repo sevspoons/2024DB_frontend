@@ -67,9 +67,10 @@ export const useUserStore = defineStore({
     /** 登入 */
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
-        //调用http 请求
+        //使用传入的名字与密码,调用http 请求
         getLogin(data)
           .then(data => {
+            //登录成功则更新token
             if (data?.success) setToken(data.data);
             resolve(data);
           })
