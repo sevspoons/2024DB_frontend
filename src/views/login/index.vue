@@ -33,21 +33,31 @@ dataThemeChange(overallStyle.value);
 const { title } = useNav();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  username: "",
+  password: ""
 });
 
+//登录按钮处罚登录尝试
 const onLogin = async (formEl: FormInstance | undefined) => {
+  //前端基本检测
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
+      //前端基本检测通过,登录按钮置为loading状态
       loading.value = true;
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        //使用用户名与密码登录
+        .loginByUsername({
+          username: ruleForm.username,
+          password: ruleForm.password
+        })
         .then(res => {
+          //检查登录结果
           if (res.success) {
+            //登录成功
             // 获取后端路由
             return initRouter().then(() => {
+              //跳转到主页面
               router.push(getTopMenu(true).path).then(() => {
                 message("登录成功", { type: "success" });
               });
