@@ -1,7 +1,6 @@
 // @ts-check
-
 /** @type {import("prettier").Config} */
-export default {
+module.exports = {
   bracketSpacing: true,
   singleQuote: false,
   arrowParens: "avoid",
