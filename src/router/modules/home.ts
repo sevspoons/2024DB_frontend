@@ -20,6 +20,15 @@ export default {
         title: "首页",
         showLink: VITE_HIDE_HOME === "true" ? false : true
       }
+    },
+    {
+      path: "/recommend",
+      name: "Recommend",
+      component: () => import("@/views/recommend/index.vue"),
+      meta: {
+        title: "推荐",
+        showLink: true
+      }
     }
   ]
 } satisfies RouteConfigsTable;

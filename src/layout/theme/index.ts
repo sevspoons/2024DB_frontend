@@ -9,19 +9,19 @@ const themeColors = {
   /* 亮白色 */
   light: {
     subMenuActiveText: "#000000d9",
-    menuBg: "#fff",
-    menuHover: "#f6f6f6",
-    subMenuBg: "#fff",
-    subMenuActiveBg: "#e0ebf6",
-    menuText: "rgb(0 0 0 / 60%)",
-    sidebarLogo: "#fff",
+    menuBg: "#8785a2",
+    menuHover: "#1212ff",
+    subMenuBg: "#ffe2e2",
+    subMenuActiveBg: "#1212ff",
+    menuText: "#fff",
+    sidebarLogo: "#1212ff",
     menuTitleHover: "#000",
-    menuActiveBefore: "#4091f7"
+    menuActiveBefore: "#ffc7c7"
   },
   /* 道奇蓝 */
   default: {
     subMenuActiveText: "#fff",
-    menuBg: "#001529",
+    menuBg: "#6F4E37",
     menuHover: "rgb(64 145 247 / 15%)",
     subMenuBg: "#0f0303",
     subMenuActiveBg: "#4091f7",
@@ -81,14 +81,14 @@ const themeColors = {
   /* 绿宝石 */
   mingQing: {
     subMenuActiveText: "#fff",
-    menuBg: "#032121",
+    menuBg: "#333333",
     menuHover: "rgb(89 191 193 / 15%)",
     subMenuBg: "#000",
-    subMenuActiveBg: "#59bfc1",
+    subMenuActiveBg: "#3E2723",
     menuText: "#7a80b4",
     sidebarLogo: "#053434",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#59bfc1"
+    menuActiveBefore: "#3E2723"
   },
   /* 酸橙绿 */
   auroraGreen: {
