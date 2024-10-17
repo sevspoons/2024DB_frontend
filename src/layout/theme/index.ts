@@ -21,14 +21,14 @@ const themeColors = {
   /* 道奇蓝 */
   default: {
     subMenuActiveText: "#fff",
-    menuBg: "#6F4E37",
-    menuHover: "rgb(64 145 247 / 15%)",
-    subMenuBg: "#0f0303",
-    subMenuActiveBg: "#4091f7",
-    menuText: "rgb(254 254 254 / 65%)",
+    menuBg: "#8785a2",
+    menuHover: "#ffc7c7",
+    subMenuBg: "#8785a2",
+    subMenuActiveBg: "#fff",
+    menuText: "#fff",
     sidebarLogo: "#002140",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#4091f7"
+    menuActiveBefore: "#fff"
   },
   /* 深紫罗兰色 */
   saucePurple: {

@@ -130,8 +130,4 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style scoped>
-:deep(.el-loading-mask) {
-  opacity: 0.45;
-}
-</style>
+<style scoped></style>
