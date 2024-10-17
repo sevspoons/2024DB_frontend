@@ -178,6 +178,7 @@ const LayHeader = defineComponent({
         'main-container',
         pureSetting.hiddenSideBar ? 'main-hidden' : ''
       ]"
+      style="background-color: #ffe2e2"
     >
       <div v-if="set.fixedHeader">
         <LayHeader />
