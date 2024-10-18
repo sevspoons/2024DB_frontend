@@ -6,6 +6,7 @@ export type totalRankItem = {
   rate: number; //评分
   content: string; //简介
   quantity: number; //菜品分量
+  canteen: string; //菜品提供的食堂
 };
 
 export const getTotalRank = () => {
@@ -14,26 +15,28 @@ export const getTotalRank = () => {
   });
 };
 
-export const tmpTotalRank: totalRankItem[] = [
+const tmpTotalRank: totalRankItem[] = [
   {
     name: "炒饭",
     type: "湘菜",
     rank: 1,
     price: 12,
-    rate: 5,
+    rate: 4.5,
     content:
       "炒饭是一种中国传统的烹饪方法，是将米饭和其他食材一起炒制而成的一道菜肴。",
-    quantity: 5 // Updated value
+    quantity: 5,
+    canteen: "食堂A"
   },
   {
     name: "炒面",
     type: "川菜",
     rank: 2,
     price: 10,
-    rate: 4,
+    rate: 4.3,
     content:
       "炒面是一种中国传统的烹饪方法，是将面条和其他食材一起炒制而成的一道菜肴。",
-    quantity: 4 // Updated value
+    quantity: 4,
+    canteen: "食堂B"
   },
   {
     name: "炒菜",
@@ -43,7 +46,8 @@ export const tmpTotalRank: totalRankItem[] = [
     rate: 3,
     content:
       "炒菜是一种中国传统的烹饪方法，是将蔬菜和其他食材一起炒制而成的一道菜肴。",
-    quantity: 3 // Updated value
+    quantity: 3,
+    canteen: "食堂C"
   },
   {
     name: "炒饼",
@@ -53,7 +57,8 @@ export const tmpTotalRank: totalRankItem[] = [
     rate: 2,
     content:
       "炒饼是一种中国传统的烹饪方法，是将饼和其他食材一起炒制而成的一道菜肴。",
-    quantity: 2 // Updated value
+    quantity: 2,
+    canteen: "食堂D"
   },
   {
     name: "炒粉",
@@ -63,7 +68,8 @@ export const tmpTotalRank: totalRankItem[] = [
     rate: 4,
     content:
       "炒粉是一种中国传统的烹饪方法，是将粉条和其他食材一起炒制而成的一道菜肴。",
-    quantity: 4 // Updated value
+    quantity: 4,
+    canteen: "食堂E"
   },
   {
     name: "炒粿",
@@ -73,6 +79,7 @@ export const tmpTotalRank: totalRankItem[] = [
     rate: 5,
     content:
       "炒粿是一种中国传统的烹饪方法，是将粿和其他食材一起炒制而成的一道菜肴。",
-    quantity: 5 // Updated value
+    quantity: 5,
+    canteen: "食堂F"
   }
 ];

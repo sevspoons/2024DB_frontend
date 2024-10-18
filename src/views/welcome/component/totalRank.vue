@@ -1,0 +1,77 @@
+<script lang="tsx" setup>
+import { ref, onMounted } from "vue";
+import { getTotalRank } from "../api";
+import { Chicken } from "@element-plus/icons-vue";
+const total_rank_datalist = ref([]);
+const total_rank_active = ref(1);
+const icons = [Chicken, Chicken, Chicken];
+const colors = ["#f85f73", "#00adb5", "#ff9a00"];
+onMounted(() => {
+  // 获取最近一周的食物排行榜 插入到total_rank_datalist中
+  getTotalRank().then(res => {
+    total_rank_datalist.value = res;
+  });
+});
+</script>
+
+<template>
+  <div class="total-rank">
+    <h2>最近一周BUAAer都在吃的:<b style="color: #ff9a00">TOP10</b></h2>
+    <br />
+    <el-collapse v-model="total_rank_active" accordion>
+      <el-collapse-item
+        v-for="(item, index) in total_rank_datalist"
+        :key="index"
+        :name="item.rank"
+      >
+        <template #title>
+          <h1>{{ "NO." + item.rank + "    " + item.name }}</h1>
+          <h3 style="color: #50616d">{{ " ---- " + item.canteen }}</h3>
+        </template>
+        <template #default>
+          <el-row>
+            <el-col :span="3">
+              <h1 style="color: #f85f73; margin-bottom: 2px">
+                ¥{{ item.price }}
+              </h1>
+              <h2 style="color: #ff7e67">{{ item.type }}</h2>
+            </el-col>
+            <el-col :span="21">
+              <el-row>
+                <el-col :span="12">
+                  <el-rate
+                    v-model="item.rate"
+                    show-score
+                    score-template="评分: {value}"
+                    disabled
+                  />
+                </el-col>
+                <el-col :span="12">
+                  <el-rate
+                    v-model="item.quantity"
+                    :icons="icons"
+                    :void-icon="Chicken"
+                    :colors="colors"
+                    show-score
+                    score-template="份量: {value}"
+                    disabled
+                  />
+                </el-col>
+              </el-row>
+              <b class="total-rank-content">{{ item.content }}</b>
+            </el-col>
+          </el-row>
+        </template>
+      </el-collapse-item>
+    </el-collapse>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+:deep(.el-rate__text) {
+  color: #b25d25;
+}
+.total-rank-content {
+  color: #493131;
+}
+</style>
