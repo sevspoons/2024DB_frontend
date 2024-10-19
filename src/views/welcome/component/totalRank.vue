@@ -26,7 +26,9 @@ onMounted(() => {
       >
         <template #title>
           <h1>{{ "NO." + item.rank + "    " + item.name }}</h1>
-          <h3 style="color: #50616d">{{ " ---- " + item.canteen }}</h3>
+          <h4 style="color: #50616d; white-space: pre-wrap">
+            {{ "     - - - -    " + item.canteen }}
+          </h4>
         </template>
         <template #default>
           <el-row>
@@ -73,5 +75,14 @@ onMounted(() => {
 }
 .total-rank-content {
   color: #493131;
+}
+.total-rank {
+  background: linear-gradient(90deg, #f6416c, #11999e) no-repeat;
+  background-size: 0% 4px;
+  background-position: 0 40px;
+  transition: background-size 0.5s;
+  &:hover {
+    background-size: 100% 4px;
+  }
 }
 </style>

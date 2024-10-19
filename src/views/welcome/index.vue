@@ -2,14 +2,13 @@
 import { number } from "echarts";
 import { ref, onMounted } from "vue";
 import totalRank from "./component/totalRank.vue";
-defineOptions({
-  name: "Welcome"
-});
+import cmpRecommend from "./component/cmpRecommend.vue";
+import { config_Light } from "./component/cmpRecommendChartConf";
 </script>
 
 <template>
   <div class="welcome-wrapper">
-    <el-row>
+    <el-row :gutter="20">
       <el-col :span="8">
         <el-card>
           <div class="welcome-card">
@@ -19,6 +18,11 @@ defineOptions({
         </el-card>
         <el-card>
           <totalRank />
+        </el-card>
+      </el-col>
+      <el-col :span="16">
+        <el-card>
+          <cmpRecommend :configL="config_Light" :configR="config_Light" />
         </el-card>
       </el-col>
     </el-row>
