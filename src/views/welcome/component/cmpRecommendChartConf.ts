@@ -1,10 +1,7 @@
-export const config_Light = {
+import { cloneDeep } from "@pureadmin/utils";
+const config = {
   dataset: {
-    source: [
-      [9, "菜品1"],
-      [8, "菜品2"],
-      [3, "菜品3"]
-    ]
+    source: null
   },
   grid: { left: "15%", right: "20%" },
   xAxis: { name: "好评数" },
@@ -32,3 +29,11 @@ export const config_Light = {
     }
   ]
 };
+
+const useRecommendChartConf = dataset => {
+  const tmp = cloneDeep(config);
+  tmp.dataset.source = dataset;
+  return tmp;
+};
+
+export default useRecommendChartConf;
