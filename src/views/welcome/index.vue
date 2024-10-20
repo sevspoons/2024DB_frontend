@@ -50,9 +50,7 @@ onMounted(() => {
 }
 :deep(.welcome-card) {
   background-image: linear-gradient(45deg, #f6416c, #11999e);
-  margin: 15px;
-  margin-left: 35px;
-  margin-right: 35px;
+  margin: 5%;
   padding: 5px;
   border-radius: 10px;
   background-position: center;
