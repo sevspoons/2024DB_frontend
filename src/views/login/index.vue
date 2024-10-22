@@ -8,15 +8,15 @@ import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { initRouter, getTopMenu } from "@/router/utils";
-import { bg, avatar, illustration } from "./utils/static";
+import { bgn, bread, bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import User from "@iconify-icons/ri/user-3-fill";
+import { defineFakeRoute } from "vite-plugin-fake-server/client";
 
 defineOptions({
   name: "Login"
@@ -30,7 +30,7 @@ initStorage();
 
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
-const { title } = useNav();
+const title = "";
 
 //获取用户输入的用户名和密码
 const ruleForm = reactive({
@@ -91,9 +91,8 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="select-none">
-    <img :src="bg" class="wave" />
-    <div class="flex-c absolute right-5 top-3">
-      <!-- 主题 -->
+    <img :src="bgn" class="wave" />
+    <!-- <div class="flex-c absolute right-5 top-3">
       <el-switch
         v-model="dataTheme"
         inline-prompt
@@ -101,14 +100,15 @@ onBeforeUnmount(() => {
         :inactive-icon="darkIcon"
         @change="dataThemeChange"
       />
-    </div>
+    </div> -->
     <div class="login-container">
-      <div class="img">
+      <!-- <div class="img">
         <component :is="toRaw(illustration)" />
-      </div>
+      </div> -->
       <div class="login-box">
         <div class="login-form">
-          <avatar class="avatar" />
+          <!-- <avatar class="avatar" /> -->
+          <img :src="bread" class="avatar" />
           <Motion>
             <h2 class="outline-none">{{ title }}</h2>
           </Motion>
@@ -156,6 +156,7 @@ onBeforeUnmount(() => {
                 class="w-full mt-4"
                 size="default"
                 type="primary"
+                color="#906C22"
                 :loading="loading"
                 @click="onLogin(ruleFormRef)"
               >
