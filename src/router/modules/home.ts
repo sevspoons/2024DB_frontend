@@ -5,7 +5,7 @@ export default {
   path: "/",
   name: "Home",
   component: Layout,
-  redirect: "/welcome",
+  redirect: "/recommend",
   meta: {
     icon: "ep:home-filled",
     title: "首页",
@@ -13,20 +13,20 @@ export default {
   },
   children: [
     {
-      path: "/welcome",
-      name: "Welcome",
-      component: () => import("@/views/welcome/index.vue"),
-      meta: {
-        title: "首页",
-        showLink: VITE_HIDE_HOME === "true" ? false : true
-      }
-    },
-    {
       path: "/recommend",
       name: "Recommend",
       component: () => import("@/views/recommend/index.vue"),
       meta: {
         title: "推荐",
+        showLink: VITE_HIDE_HOME === "true" ? false : true
+      }
+    },
+    {
+      path: "/overview",
+      name: "Overview",
+      component: () => import("@/views/overview/index.vue"),
+      meta: {
+        title: "总览",
         showLink: true
       }
     }

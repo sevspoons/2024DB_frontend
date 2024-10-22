@@ -1,22 +1,12 @@
-export type totalRankItem = {
-  id: number; // ID
-  name: string; //菜名
-  type: string; //菜系
-  rank: number; //排名
-  price: number; //价格
-  rate: number; //评分
-  content: string; //简介
-  quantity: number; //菜品分量
-  canteen: string; //菜品提供的食堂
-};
+import type { dishInfo } from "@/api/common";
 
 export const getTotalRank = () => {
-  return new Promise<totalRankItem[]>(resolve => {
+  return new Promise<dishInfo[]>(resolve => {
     resolve(tmpTotalRank);
   });
 };
 
-const tmpTotalRank: totalRankItem[] = [
+const tmpTotalRank: dishInfo[] = [
   {
     id: 1,
     name: "炒饭",
