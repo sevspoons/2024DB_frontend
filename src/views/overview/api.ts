@@ -1,6 +1,6 @@
 import type { dishInfo } from "@/api/common";
 
-export const getOverview = config => {
+export const getOverview = _config => {
   return new Promise<overview>(resolve => {
     resolve(tmpOverview);
   });

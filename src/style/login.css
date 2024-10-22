@@ -1,7 +1,7 @@
 .wave {
   position: fixed;
   height: 100%;
-  width: 80%;
+  width: 100%;
   left: 0;
   bottom: 0;
   z-index: -1;
@@ -21,6 +21,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  justify-content: center;
 }
 
 .img img {
@@ -28,6 +29,7 @@
 }
 
 .login-box {
+  justify-content: center;
   display: flex;
   align-items: center;
   text-align: center;
@@ -39,21 +41,19 @@
 }
 
 .avatar {
-  width: 350px;
+  width: 100px;
   height: 80px;
 }
 
 .login-form h2 {
   text-transform: uppercase;
   margin: 15px 0;
-  color: #999;
+  color: #276176;
   font:
-    bold 200% Consolas,
-    Monaco,
-    monospace;
+  bold 200% 'Heiti SC', 'SimHei', 'Microsoft YaHei', sans-serif;
 }
 
-@media screen and (max-width: 1180px) {
+/* @media screen and (max-width: 1180px) {
   .login-container {
     grid-gap: 9rem;
   }
@@ -72,20 +72,17 @@
   }
 
   .avatar {
-    width: 280px;
+    width: 100px;
     height: 80px;
   }
-}
+} */
 
-@media screen and (max-width: 968px) {
-  .wave {
-    display: none;
-  }
-
+@media screen /*and (max-width: 968px)*/ {
   .img {
     display: none;
   }
 
+  
   .login-container {
     grid-template-columns: 1fr;
   }
