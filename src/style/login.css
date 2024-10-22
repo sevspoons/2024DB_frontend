@@ -82,6 +82,7 @@
     display: none;
   }
 
+  
   .login-container {
     grid-template-columns: 1fr;
   }
