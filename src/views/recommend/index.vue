@@ -1,24 +1,7 @@
 <script setup lang="ts">
-import { number } from "echarts";
-import { ref, onMounted } from "vue";
 import totalRank from "./component/totalRank.vue";
 import cmpRecommend from "./component/cmpRecommend.vue";
-import useRecommendChartConf from "./component/cmpRecommendChartConf";
-
-const configL = ref({});
-const configR = ref({});
-onMounted(() => {
-  configL.value = useRecommendChartConf([
-    [2, "菜品1"],
-    [3, "菜品2"],
-    [5, "菜品3"]
-  ]);
-  configR.value = useRecommendChartConf([
-    [3, "菜品4"],
-    [8, "菜品5"],
-    [9, "菜品6"]
-  ]);
-});
+import personalizedRecommend from "./component/personalizedRecommend.vue";
 </script>
 
 <template>
@@ -37,7 +20,10 @@ onMounted(() => {
       </el-col>
       <el-col :span="16">
         <el-card>
-          <cmpRecommend :configL="configL" :configR="configR" />
+          <cmpRecommend />
+        </el-card>
+        <el-card>
+          <personalizedRecommend />
         </el-card>
       </el-col>
     </el-row>
