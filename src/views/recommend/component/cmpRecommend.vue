@@ -9,17 +9,43 @@
     </el-row>
     <el-row>
       <el-col :span="12">
-        <div class="cmp-left">
-          <div class="chart-wrapper">
-            <simpleChart :config="props.configL" />
-          </div>
-        </div>
+        <el-row class="cmp-left">
+          <el-col :span="12">
+            <div class="chart-wrapper">
+              <simpleChart :config="configL" />
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="chart-text">
+              <h2>
+                健康的BUAAer<br />对这几道菜给出<br /><b
+                  style="font-size: 45px; color: #6e7955"
+                  >好评!</b
+                >
+              </h2>
+            </div>
+          </el-col>
+        </el-row>
       </el-col>
       <el-col :span="12">
         <div class="cmp-right">
-          <div class="chart-wrapper">
-            <simpleChart :config="props.configR" />
-          </div>
+          <el-row>
+            <el-col :span="12">
+              <div class="chart-wrapper">
+                <simpleChart :config="configR" />
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="chart-text">
+                <h2>
+                  无辣不欢?<br />无肉不香?<br /><b
+                    style="font-size: 45px; color: #752100"
+                    >看这里!</b
+                  >
+                </h2>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
     </el-row>
@@ -27,11 +53,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import simpleChart from "@/components/simpleChart.vue";
-const props = defineProps<{
-  configL;
-  configR;
-}>();
+import useRecommendChartConf from "./cmpRecommendChartConf";
+const configL = ref({});
+const configR = ref({});
+onMounted(() => {
+  configL.value = useRecommendChartConf([
+    [2, "菜品1"],
+    [3.5, "菜品2"],
+    [5, "菜品3"]
+  ]);
+  configR.value = useRecommendChartConf([
+    [3.7, "菜品4"],
+    [4.8, "菜品5"],
+    [4.9, "菜品6"]
+  ]);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -53,5 +91,10 @@ const props = defineProps<{
   text-align: center;
   width: 100vw;
   white-space: pre-wrap;
+}
+.chart-text {
+  padding: 30px;
+  padding-top: 80px;
+  text-align: center;
 }
 </style>

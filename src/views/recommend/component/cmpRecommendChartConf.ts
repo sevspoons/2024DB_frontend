@@ -3,14 +3,18 @@ const config = {
   dataset: {
     source: null
   },
+  tooltip: {
+    trigger: "axis",
+    axisPointer: { type: "shadow" }
+  },
   grid: { left: "15%", right: "20%" },
-  xAxis: { name: "好评数" },
+  xAxis: { name: "评分" },
   yAxis: { type: "category" },
   visualMap: {
     orient: "horizontal",
     bottom: "-10%",
     min: 0,
-    max: 10,
+    max: 5,
     // Map the score column to color
     dimension: 0,
     inRange: {
