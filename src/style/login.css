@@ -36,8 +36,17 @@
   overflow: hidden;
 }
 
+.text-center {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 .login-form {
-  width: 360px;
+  width: 600px;
+  text-align: center;
+  align-items: center;
 }
 
 .avatar {
@@ -47,37 +56,12 @@
 
 .login-form h2 {
   text-transform: uppercase;
-  margin: 15px 0;
-  color: #276176;
+  color: #946d1f;
   font:
   bold 200% 'Heiti SC', 'SimHei', 'Microsoft YaHei', sans-serif;
 }
 
-/* @media screen and (max-width: 1180px) {
-  .login-container {
-    grid-gap: 9rem;
-  }
-
-  .login-form {
-    width: 290px;
-  }
-
-  .login-form h2 {
-    font-size: 2.4rem;
-    margin: 8px 0;
-  }
-
-  .img img {
-    width: 360px;
-  }
-
-  .avatar {
-    width: 100px;
-    height: 80px;
-  }
-} */
-
-@media screen /*and (max-width: 968px)*/ {
+@media screen {
   .img {
     display: none;
   }

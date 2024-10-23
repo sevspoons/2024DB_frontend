@@ -31,7 +31,7 @@ initStorage();
 
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
-const title = "";
+const title = ref("");
 
 //获取用户输入的用户名和密码
 const ruleForm = reactive({
@@ -110,116 +110,142 @@ onBeforeUnmount(() => {
       <div class="login-box">
         <div class="login-form">
           <!-- <avatar class="avatar" /> -->
-          <img :src="bread" class="avatar" />
+          <img :src="bread" class="avatar" @dragstart.prevent />
           <Motion>
-            <h2 class="outline-none">{{ title }}</h2>
+            <h2>{{ show ? "Login" : "Register" }}</h2>
+            <h2>{{ title }}</h2>
           </Motion>
-          <div>
-            <el-button @click="show = !show">Click Me</el-button>
-            <div style="margin-top: 20px">
-              <el-collapse-transition>
-                <div v-show="show" class="transition-box">
-                  <Motion :delay="100">
-                    <el-form-item
-                      :rules="[
-                        {
-                          required: true,
-                          message: '请输入账号',
-                          trigger: 'blur'
-                        }
-                      ]"
-                      prop="username"
+          <div class="text-center">
+            <div class="block-color">
+              <div class="text-left">
+                <el-button
+                  size="default"
+                  type="primary"
+                  color="#906C22"
+                  round
+                  @click="show = !show"
+                  >{{ show ? "去注册" : "去登录" }}</el-button
+                >
+              </div>
+              <div style="margin-top: 20px">
+                <el-collapse-transition>
+                  <div v-show="show" class="transition-box">
+                    <el-form
+                      ref="ruleFormRef"
+                      :model="ruleForm"
+                      :rules="loginRules"
+                      size="large"
                     >
-                      <el-input
-                        v-model="ruleForm.username"
-                        clearable
-                        placeholder="账号"
-                        :prefix-icon="useRenderIcon(User)"
-                      />
-                    </el-form-item>
-                  </Motion>
-                  <Motion :delay="150">
-                    <el-form-item prop="password">
-                      <el-input
-                        v-model="ruleForm.password"
-                        clearable
-                        show-password
-                        placeholder="密码"
-                        :prefix-icon="useRenderIcon(Lock)"
-                      />
-                    </el-form-item>
-                  </Motion>
-                  <Motion :delay="250">
-                    <el-button
-                      class="w-full mt-4"
-                      size="default"
-                      type="primary"
-                      color="#906C22"
-                      :loading="loading"
-                      @click="onLogin(ruleFormRef)"
+                      <Motion :delay="100">
+                        <el-form-item
+                          :rules="[
+                            {
+                              required: true,
+                              message: '请输入账号',
+                              trigger: 'blur'
+                            }
+                          ]"
+                          prop="username"
+                        >
+                          <el-input
+                            v-model="ruleForm.username"
+                            clearable
+                            placeholder="账号"
+                            :prefix-icon="useRenderIcon(User)"
+                          />
+                        </el-form-item>
+                      </Motion>
+                      <Motion :delay="150">
+                        <el-form-item prop="password">
+                          <el-input
+                            v-model="ruleForm.password"
+                            clearable
+                            show-password
+                            placeholder="密码"
+                            :prefix-icon="useRenderIcon(Lock)"
+                          />
+                        </el-form-item>
+                      </Motion>
+                      <Motion :delay="250">
+                        <el-button
+                          class="w-full mt-4"
+                          size="default"
+                          type="primary"
+                          color="#906C22"
+                          :loading="loading"
+                          @click="onLogin(ruleFormRef)"
+                        >
+                          登录
+                        </el-button>
+                      </Motion>
+                    </el-form>
+                  </div>
+                </el-collapse-transition>
+                <el-collapse-transition>
+                  <div v-show="!show" class="transition-box">
+                    <el-form
+                      ref="ruleFormRef"
+                      :model="ruleForm"
+                      :rules="loginRules"
+                      size="large"
                     >
-                      登录
-                    </el-button>
-                  </Motion>
-                </div>
-              </el-collapse-transition>
-              <el-collapse-transition>
-                <div v-show="!show" class="transition-box">
-                  <Motion :delay="100">
-                    <el-form-item
-                      :rules="[
-                        {
-                          required: true,
-                          message: '请输入账号',
-                          trigger: 'blur'
-                        }
-                      ]"
-                      prop="username"
-                    >
-                      <el-input
-                        v-model="ruleForm.username"
-                        clearable
-                        placeholder="账号"
-                        :prefix-icon="useRenderIcon(User)"
-                      />
-                    </el-form-item>
-                  </Motion>
-                  <Motion :delay="150">
-                    <el-form-item prop="password">
-                      <el-input
-                        v-model="ruleForm.password"
-                        clearable
-                        show-password
-                        placeholder="密码"
-                        :prefix-icon="useRenderIcon(Lock)"
-                      />
-                    </el-form-item>
-                  </Motion>
-                  <Motion :delay="150">
-                    <el-form-item prop="password">
-                      <el-input
-                        v-model="ruleForm.password_again"
-                        clearable
-                        show-password
-                        placeholder="重复密码"
-                        :prefix-icon="useRenderIcon(Lock)"
-                      />
-                    </el-form-item>
-                  </Motion>
-                  <Motion :delay="250">
-                    <el-button
-                      class="w-full mt-4"
-                      size="default"
-                      type="primary"
-                      color="#906C22"
-                      :loading="loading"
-                      @click="onLogin(ruleFormRef)"
-                    >
-                      注册
-                    </el-button>
-                  </Motion>
-                </div>
-              </el-collapse-transition>
+                      <Motion :delay="100">
+                        <el-form-item
+                          :rules="[
+                            {
+                              required: true,
+                              message: '请输入账号',
+                              trigger: 'blur'
+                            }
+                          ]"
+                          prop="username"
+                        >
+                          <el-input
+                            v-model="ruleForm.username"
+                            clearable
+                            placeholder="账号"
+                            :prefix-icon="useRenderIcon(User)"
+                          />
+                        </el-form-item>
+                      </Motion>
+                      <Motion :delay="150">
+                        <el-form-item prop="password">
+                          <el-input
+                            v-model="ruleForm.password"
+                            clearable
+                            show-password
+                            placeholder="密码"
+                            :prefix-icon="useRenderIcon(Lock)"
+                          />
+                        </el-form-item>
+                      </Motion>
+                      <Motion :delay="150">
+                        <el-form-item prop="password">
+                          <el-input
+                            v-model="ruleForm.password_again"
+                            clearable
+                            show-password
+                            placeholder="重复密码"
+                            :prefix-icon="useRenderIcon(Lock)"
+                          />
+                        </el-form-item>
+                      </Motion>
+                      <Motion :delay="250">
+                        <el-button
+                          class="w-full mt-4"
+                          size="default"
+                          type="primary"
+                          color="#906C22"
+                          :loading="loading"
+                          @click="onLogin(ruleFormRef)"
+                        >
+                          注册
+                        </el-button>
+                      </Motion>
+                    </el-form>
+                  </div>
+                </el-collapse-transition>
+              </div>
             </div>
           </div>
         </div>
@@ -233,10 +259,31 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss" scoped>
-:deep(.setcolor) {
-  background-color: red !important;
-  color: blue; // 折叠项标题颜色
+.text-left {
+  text-align: left;
 }
+
+.block-color {
+  // position: absolute;
+  // /*定位方式绝对定位absolute*/
+  // top: 50%;
+  // left: 50%;
+  // /*顶和高同时设置50%实现的是同时水平垂直居中效果*/
+  // transform: translate(-50%, -50%);
+  // /*实现块元素百分比下居中*/
+  width: 450px;
+  padding: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  /*背景颜色为黑色，透明度为0.8*/
+  box-sizing: border-box;
+  /*box-sizing设置盒子模型的解析模式为怪异盒模型，
+  将border和padding划归到width范围内*/
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+  /*边框阴影  水平阴影0 垂直阴影15px 模糊25px 颜色黑色透明度0.5*/
+  border-radius: 15px;
+  /*边框圆角，四个角均为15px*/
+}
+
 :deep(.el-input-group__append, .el-input-group__prepend) {
   padding: 0;
 }
