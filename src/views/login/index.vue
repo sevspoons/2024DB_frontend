@@ -8,7 +8,7 @@ import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { initRouter, getTopMenu } from "@/router/utils";
-import { bgn, bread, bg, avatar, illustration } from "./utils/static";
+import { title, bgn, bread, bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
@@ -31,7 +31,6 @@ initStorage();
 
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
-const title = ref("");
 
 //获取用户输入的用户名和密码
 const ruleForm = reactive({
@@ -110,14 +109,11 @@ onBeforeUnmount(() => {
       <div class="login-box">
         <div class="login-form">
           <!-- <avatar class="avatar" /> -->
-          <img :src="bread" class="avatar" @dragstart.prevent />
-          <Motion>
-            <h2>{{ show ? "Login" : "Register" }}</h2>
-            <h2>{{ title }}</h2>
-          </Motion>
+          <img :src="bread" class="avatar_bread" @dragstart.prevent />
+          <img :src="title" class="avatar_title" @dragstart.prevent />
           <div class="text-center">
             <div class="block-color">
-              <div class="text-left">
+              <!-- <div class="text-left">
                 <el-button
                   size="default"
                   type="primary"
@@ -126,7 +122,10 @@ onBeforeUnmount(() => {
                   @click="show = !show"
                   >{{ show ? "去注册" : "去登录" }}</el-button
                 >
-              </div>
+              </div> -->
+              <Motion>
+                <h2>{{ show ? "Login" : "Register" }}</h2>
+              </Motion>
               <div style="margin-top: 20px">
                 <el-collapse-transition>
                   <div v-show="show" class="transition-box">
@@ -255,7 +254,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-@import url("@/style/login.css");
+@import url("@/style/login.scss");
 </style>
 
 <style lang="scss" scoped>

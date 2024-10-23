@@ -49,9 +49,16 @@
   align-items: center;
 }
 
-.avatar {
+.avatar_bread {
   width: 100px;
-  height: 80px;
+  transition: width 0.3s ease;
+  &:hover {
+    width: 120px;
+  }
+}
+
+.avatar_title {
+  width: 400px;
 }
 
 .login-form h2 {
