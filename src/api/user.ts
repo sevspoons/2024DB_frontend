@@ -36,17 +36,29 @@ export type RefreshTokenResult = {
   };
 };
 
+type LoginParams = {
+  username: string;
+  password: string;
+};
+
 /** 登录 */
-export const getLogin = (data?: object) => {
+export const getLogin = (data?: LoginParams) => {
   //请求发出,baseUrlApi自动拼接url,http自动拼接参数
-  return http.request<UserResult>("post", baseUrlApi("/login"), { data });
+  return http.request<UserResult>(
+    "post",
+    baseUrlApi(
+      "user/login" +
+        "?" +
+        "username=" +
+        data.username +
+        "&" +
+        "password=" +
+        data.password
+    )
+  );
 };
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>(
-    "post",
-    baseUrlApi("/refresh-token"),
-    { data }
-  );
+  return http.request<RefreshTokenResult>("post", "/refresh-token", { data });
 };

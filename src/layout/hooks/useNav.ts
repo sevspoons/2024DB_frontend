@@ -63,13 +63,13 @@ export function useNav() {
     return pureApp.getDevice;
   });
 
-  const { $storage, $config } = useGlobal<GlobalPropertiesApi>();
+  const { $storage } = useGlobal<GlobalPropertiesApi>();
   const layout = computed(() => {
     return $storage?.layout?.layout;
   });
 
   const title = computed(() => {
-    return $config.Title;
+    return "食光航迹";
   });
 
   /** 动态title */
@@ -123,7 +123,7 @@ export function useNav() {
 
   /** 获取`logo` */
   function getLogo() {
-    return new URL("/logo.svg", import.meta.url).href;
+    return new URL("/logo.png", import.meta.url).href;
   }
 
   return {

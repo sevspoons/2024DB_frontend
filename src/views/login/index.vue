@@ -118,14 +118,14 @@ onBeforeUnmount(() => {
           <div class="text-center">
             <div class="block-color">
               <div class="text-left">
-                <el-button
+                <!-- <el-button
                   size="default"
                   type="primary"
                   color="#906C22"
                   round
                   @click="show = !show"
                   >{{ show ? "去注册" : "去登录" }}</el-button
-                >
+                > -->
               </div>
               <div style="margin-top: 20px">
                 <el-collapse-transition>
