@@ -44,18 +44,7 @@ type LoginParams = {
 /** 登录 */
 export const getLogin = (data?: LoginParams) => {
   //请求发出,baseUrlApi自动拼接url,http自动拼接参数
-  return http.request<UserResult>(
-    "post",
-    baseUrlApi(
-      "user/login" +
-        "?" +
-        "username=" +
-        data.username +
-        "&" +
-        "password=" +
-        data.password
-    )
-  );
+  return http.request<UserResult>("post", baseUrlApi("user/login"), { data });
 };
 
 /** 刷新`token` */

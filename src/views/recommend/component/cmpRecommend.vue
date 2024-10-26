@@ -15,7 +15,7 @@
               <simpleChart :config="configL" />
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="10" :offset="2">
             <div class="chart-text">
               <h2>
                 健康的BUAAer<br />对这几道菜给出<br /><b
@@ -75,7 +75,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .chart-wrapper {
   height: 40vh;
-  width: 40vh;
+  width: 35vh;
   align-items: center;
 }
 .cmp-wrapper {
@@ -93,8 +93,8 @@ onMounted(() => {
   white-space: pre-wrap;
 }
 .chart-text {
-  padding: 30px;
-  padding-top: 80px;
+  margin-top: 50px;
   text-align: center;
+  align-items: center;
 }
 </style>

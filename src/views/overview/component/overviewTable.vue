@@ -26,6 +26,9 @@
           @blur="tableConf.maxPrice = maxPrice"
         />
       </el-col>
+      <el-col :span="3" :offset="8">
+        <el-button @click="handelAddNewDish">添加新菜品</el-button>
+      </el-col>
     </el-row>
     <el-divider><Chicken /></el-divider>
     <el-row>
@@ -48,6 +51,7 @@
         :total="total"
       />
     </el-row>
+    <addNewDish ref="addNewDishRef" />
   </div>
 </template>
 
@@ -56,6 +60,7 @@ import { reactive, ref, watch, onMounted } from "vue";
 import { getOverview } from "../api";
 import { dishInfoColums, canteenList } from "./colums";
 import { Chicken } from "@element-plus/icons-vue";
+import addNewDish from "./addNewDish.vue";
 const tableConf = reactive({
   currentPage: 1,
   pageSize: 10,
@@ -65,6 +70,7 @@ const tableConf = reactive({
 const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
+const addNewDishRef = ref(null);
 
 watch(
   () => tableConf,
@@ -80,6 +86,10 @@ const updateTable = () => {
     tableData.value = res.data;
     total.value = res.total;
   });
+};
+
+const handelAddNewDish = () => {
+  addNewDishRef.value.open();
 };
 </script>
 
