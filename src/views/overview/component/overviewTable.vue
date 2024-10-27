@@ -27,7 +27,7 @@
         />
       </el-col>
       <el-col :span="3" :offset="8">
-        <el-button @click="handelAddNewDish">添加新菜品</el-button>
+        <el-button @click="openAddDish">添加新菜品</el-button>
       </el-col>
     </el-row>
     <el-divider><Chicken /></el-divider>
@@ -51,16 +51,27 @@
         :total="total"
       />
     </el-row>
-    <addNewDish ref="addNewDishRef" />
+    <dishInfoForm
+      ref="addDishInfoRef"
+      :getInit="getPaleDishInfo"
+      :handelClick="addDishInfo"
+      btnText="添加"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, watch, onMounted } from "vue";
 import { getOverview } from "../api";
-import { dishInfoColums, canteenList } from "./colums";
+import {
+  dishInfoColums,
+  canteenList,
+  getDishInfo,
+  addDishInfo,
+  getPaleDishInfo
+} from "./dataStore";
 import { Chicken } from "@element-plus/icons-vue";
-import addNewDish from "./addNewDish.vue";
+import dishInfoForm from "./dishInfoForm.vue";
 const tableConf = reactive({
   currentPage: 1,
   pageSize: 10,
@@ -70,7 +81,7 @@ const tableConf = reactive({
 const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
-const addNewDishRef = ref(null);
+const addDishInfoRef = ref(null);
 
 watch(
   () => tableConf,
@@ -88,8 +99,8 @@ const updateTable = () => {
   });
 };
 
-const handelAddNewDish = () => {
-  addNewDishRef.value.open();
+const openAddDish = () => {
+  addDishInfoRef.value.open();
 };
 </script>
 

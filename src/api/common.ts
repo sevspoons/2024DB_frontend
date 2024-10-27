@@ -16,3 +16,14 @@ export type commentInfo = {
   comment: string; // 评论
   rate: number; // 评分
 };
+
+import { http } from "@/utils/http";
+import { baseUrlApi } from "./baseurl";
+
+export const getDishInfoById = (dishId: number) => {
+  return http.request<dishInfo>("get", baseUrlApi("info/getById/" + dishId));
+};
+
+export const addDishInfoById = (data: dishInfo) => {
+  return http.request<dishInfo>("put", baseUrlApi("info/add"), { data });
+};
