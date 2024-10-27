@@ -40,6 +40,24 @@
             :prop="item.prop"
             :label="item.label"
           />
+          <el-table-column label="操作" render>
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="primary"
+                :icon="EditPen"
+                circle
+                @click="editDishInfo(scope.row)"
+              />
+              <el-button
+                size="small"
+                type="info"
+                :icon="Comment"
+                circle
+                @click="commentDish(scope.row)"
+              />
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>
@@ -70,7 +88,7 @@ import {
   addDishInfo,
   getPaleDishInfo
 } from "./dataStore";
-import { Chicken } from "@element-plus/icons-vue";
+import { Chicken, EditPen, Comment } from "@element-plus/icons-vue";
 import dishInfoForm from "./dishInfoForm.vue";
 const tableConf = reactive({
   currentPage: 1,
@@ -78,6 +96,7 @@ const tableConf = reactive({
   canteen: "",
   maxPrice: null
 });
+import { message } from "@/utils/message";
 const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
@@ -101,6 +120,16 @@ const updateTable = () => {
 
 const openAddDish = () => {
   addDishInfoRef.value.open();
+};
+
+const editDishInfo = row => {
+  console.log("edit dish info", row);
+  message("修改信息", { type: "info" });
+};
+
+const commentDish = row => {
+  console.log("comment dish info", row);
+  message("评价菜品", { type: "info" });
 };
 </script>
 
