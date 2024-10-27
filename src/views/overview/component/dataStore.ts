@@ -1,5 +1,5 @@
 import type { dishInfo } from "@/api/common";
-import { getDishInfoById, addDishInfoById } from "@/api/common";
+import { getDishInfoById, addDishInfoById, updateDishInfo } from "@/api/common";
 import { message } from "@/utils/message";
 
 export const dishInfoColums = [
@@ -28,8 +28,8 @@ export const getPaleDishInfo = (): dishInfo => {
   };
 };
 
-export const getDishInfo = (dishInfo: dishInfo) => {
-  getDishInfoById(dishInfo.id)
+export const getDishInfo = async (id: number): Promise<dishInfo> => {
+  return getDishInfoById(id)
     .then(res => {
       message("查询成功", { type: "success" });
       return res;
@@ -48,6 +48,17 @@ export const addDishInfo = (dishInfo: dishInfo) => {
     })
     .catch(err => {
       message("添加失败", { type: "error" });
+      console.log(err);
+    });
+};
+
+export const updateDish = (dishInfo: dishInfo) => {
+  updateDishInfo(dishInfo.id, dishInfo)
+    .then(() => {
+      message("更新成功", { type: "success" });
+    })
+    .catch(err => {
+      message("更新失败", { type: "error" });
       console.log(err);
     });
 };

@@ -20,10 +20,16 @@ export type commentInfo = {
 import { http } from "@/utils/http";
 import { baseUrlApi } from "./baseurl";
 
-export const getDishInfoById = (dishId: number) => {
+export const getDishInfoById = (dishId: number): Promise<dishInfo> => {
   return http.request<dishInfo>("get", baseUrlApi("info/getById/" + dishId));
 };
 
 export const addDishInfoById = (data: dishInfo) => {
   return http.request<dishInfo>("put", baseUrlApi("info/add"), { data });
+};
+
+export const updateDishInfo = (id: number, data: dishInfo) => {
+  return http.request<dishInfo>("put", baseUrlApi("info/update/" + id), {
+    data
+  });
 };

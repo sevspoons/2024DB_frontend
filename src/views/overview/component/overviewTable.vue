@@ -71,22 +71,36 @@
     </el-row>
     <dishInfoForm
       ref="addDishInfoRef"
-      :getInit="getPaleDishInfo"
+      class="add-dish-info-form"
+      :init="getPaleDishInfo()"
       :handelClick="addDishInfo"
       btnText="添加"
+    />
+    <dishInfoForm
+      ref="editDishInfoRef"
+      class="edit-dish-info-form"
+      :init="dishInfoId"
+      :handelClick="
+        dishInfo => {
+          updateDish(dishInfo);
+          updateTable();
+        }
+      "
+      btnText="修改"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, onMounted } from "vue";
+import { reactive, ref, watch, onMounted, nextTick } from "vue";
 import { getOverview } from "../api";
 import {
   dishInfoColums,
   canteenList,
   getDishInfo,
   addDishInfo,
-  getPaleDishInfo
+  getPaleDishInfo,
+  updateDish
 } from "./dataStore";
 import { Chicken, EditPen, Comment } from "@element-plus/icons-vue";
 import dishInfoForm from "./dishInfoForm.vue";
@@ -101,6 +115,8 @@ const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
 const addDishInfoRef = ref(null);
+const editDishInfoRef = ref(null);
+const dishInfoId = ref({});
 
 watch(
   () => tableConf,
@@ -123,8 +139,10 @@ const openAddDish = () => {
 };
 
 const editDishInfo = row => {
-  console.log("edit dish info", row);
-  message("修改信息", { type: "info" });
+  dishInfoId.value = row;
+  nextTick(() => {
+    editDishInfoRef.value.open();
+  });
 };
 
 const commentDish = row => {

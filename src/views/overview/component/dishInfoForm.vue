@@ -69,7 +69,7 @@
         }}</el-button>
       </el-col>
       <el-col :span="4" :offset="2">
-        <el-button @click="handelClear(formRef)">清空</el-button>
+        <el-button @click="handelClear(formRef)">重置</el-button>
       </el-col>
     </el-row>
   </el-dialog>
@@ -81,11 +81,12 @@ import type { FormInstance } from "element-plus";
 import type { dishInfo } from "@/api/common";
 import { Chicken } from "@element-plus/icons-vue";
 import { message } from "@/utils/message";
+import { cloneDeep } from "@pureadmin/utils";
 const formRef = ref<FormInstance>();
 const icons = [Chicken, Chicken, Chicken];
 const colors = ["#f85f73", "#00adb5", "#ff9a00"];
 const props = defineProps({
-  getInit: Function,
+  init: {},
   handelClick: Function,
   btnText: String
 });
@@ -94,7 +95,7 @@ const dialogEnable = ref(false);
 const formModel = ref<dishInfo>(null);
 const notEmptyRule = [{ required: true, message: "不能为空", trigger: "blur" }];
 onMounted(() => {
-  formModel.value = props.getInit();
+  formModel.value = cloneDeep(props.init);
 });
 const handelSubmit = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -111,12 +112,13 @@ const handelSubmit = (formEl: FormInstance | undefined) => {
 const handelClear = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
-  formModel.value = props.getInit();
+  formModel.value = cloneDeep(props.init);
 };
 
 //expose func
 const open = () => {
   dialogEnable.value = true;
+  formModel.value = cloneDeep(props.init);
 };
 defineExpose({
   open
