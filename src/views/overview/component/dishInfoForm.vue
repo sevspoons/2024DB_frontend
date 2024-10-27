@@ -49,7 +49,7 @@
           />
         </el-form-item>
       </el-row>
-      <el-form-item label="简介">
+      <el-form-item label="简介" :rules="notEmptyRule">
         <el-input
           v-model="formModel.content"
           clearable
