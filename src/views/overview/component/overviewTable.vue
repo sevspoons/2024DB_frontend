@@ -47,14 +47,14 @@
                 type="primary"
                 :icon="EditPen"
                 circle
-                @click="editDishInfo(scope.row)"
+                @click="openUpdateDish(scope.row)"
               />
               <el-button
                 size="small"
                 type="info"
                 :icon="Comment"
                 circle
-                @click="commentDish(scope.row)"
+                @click="openCommentDish(scope.row)"
               />
             </template>
           </el-table-column>
@@ -69,6 +69,7 @@
         :total="total"
       />
     </el-row>
+    <!-- 添加菜品信息表单 -->
     <dishInfoForm
       ref="addDishInfoRef"
       class="add-dish-info-form"
@@ -76,6 +77,7 @@
       :handelClick="addDishInfo"
       btnText="添加"
     />
+    <!-- 修改菜品信息表单 -->
     <dishInfoForm
       ref="editDishInfoRef"
       class="edit-dish-info-form"
@@ -88,6 +90,7 @@
       "
       btnText="修改"
     />
+    <addCommentForm ref="addCommentFormRef" />
   </div>
 </template>
 
@@ -104,6 +107,7 @@ import {
 } from "./dataStore";
 import { Chicken, EditPen, Comment } from "@element-plus/icons-vue";
 import dishInfoForm from "./dishInfoForm.vue";
+import addCommentForm from "./addCommentForm.vue";
 const tableConf = reactive({
   currentPage: 1,
   pageSize: 10,
@@ -116,6 +120,7 @@ const maxPrice = ref(null);
 const total = ref(0);
 const addDishInfoRef = ref(null);
 const editDishInfoRef = ref(null);
+const addCommentFormRef = ref(null);
 const dishInfoId = ref({});
 
 watch(
@@ -138,16 +143,15 @@ const openAddDish = () => {
   addDishInfoRef.value.open();
 };
 
-const editDishInfo = row => {
+const openUpdateDish = row => {
   dishInfoId.value = row;
   nextTick(() => {
     editDishInfoRef.value.open();
   });
 };
 
-const commentDish = row => {
-  console.log("comment dish info", row);
-  message("评价菜品", { type: "info" });
+const openCommentDish = row => {
+  addCommentFormRef.value.open(row.id);
 };
 </script>
 

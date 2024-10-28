@@ -33,3 +33,9 @@ export const updateDishInfo = (id: number, data: dishInfo) => {
     data
   });
 };
+
+export const addComment = (id: number, data) => {
+  return http.request<dishInfo>("put", baseUrlApi("comment/add/" + id), {
+    data
+  });
+};
