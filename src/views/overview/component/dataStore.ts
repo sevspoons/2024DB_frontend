@@ -32,7 +32,7 @@ export const getDishInfo = async (id: number): Promise<dishInfo> => {
   return getDishInfoById(id)
     .then(res => {
       message("查询成功", { type: "success" });
-      return res;
+      return res.data;
     })
     .catch(err => {
       message("查询失败", { type: "error" });

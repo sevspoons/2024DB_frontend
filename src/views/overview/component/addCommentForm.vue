@@ -21,7 +21,7 @@
         </el-form-item>
       </el-row>
       <el-col :span="22">
-        <el-form-item label="简介" :rules="notEmptyRule">
+        <el-form-item label="评价" :rules="notEmptyRule">
           <el-input
             v-model="formModel.content"
             clearable
@@ -51,6 +51,9 @@ import { Chicken } from "@element-plus/icons-vue";
 import { message } from "@/utils/message";
 import { addComment } from "@/api/common";
 import { cloneDeep } from "@pureadmin/utils";
+const props = defineProps({
+  report: Function
+});
 const init = {
   rate: null,
   quantity: null,
@@ -69,6 +72,7 @@ const handelClick = (id: number, data) => {
   addComment(id, data)
     .then(res => {
       message("添加成功", { type: "success" });
+      props.report();
     })
     .catch(err => {
       message("添加失败", { type: "error" });

@@ -42,20 +42,24 @@
           />
           <el-table-column label="操作" render>
             <template #default="scope">
-              <el-button
-                size="small"
-                type="primary"
-                :icon="EditPen"
-                circle
-                @click="openUpdateDish(scope.row)"
-              />
-              <el-button
-                size="small"
-                type="info"
-                :icon="Comment"
-                circle
-                @click="openCommentDish(scope.row)"
-              />
+              <el-tooltip content="修改" placement="left">
+                <el-button
+                  size="small"
+                  type="primary"
+                  :icon="EditPen"
+                  circle
+                  @click="openUpdateDish(scope.row)"
+                />
+              </el-tooltip>
+              <el-tooltip content="评价" placement="right">
+                <el-button
+                  size="small"
+                  type="info"
+                  :icon="Comment"
+                  circle
+                  @click="openDishComment(scope.row)"
+                />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -90,7 +94,7 @@
       "
       btnText="修改"
     />
-    <addCommentForm ref="addCommentFormRef" />
+    <comment ref="commentRef" />
   </div>
 </template>
 
@@ -107,7 +111,7 @@ import {
 } from "./dataStore";
 import { Chicken, EditPen, Comment } from "@element-plus/icons-vue";
 import dishInfoForm from "./dishInfoForm.vue";
-import addCommentForm from "./addCommentForm.vue";
+import comment from "./comment.vue";
 const tableConf = reactive({
   currentPage: 1,
   pageSize: 10,
@@ -120,7 +124,7 @@ const maxPrice = ref(null);
 const total = ref(0);
 const addDishInfoRef = ref(null);
 const editDishInfoRef = ref(null);
-const addCommentFormRef = ref(null);
+const commentRef = ref(null);
 const dishInfoId = ref({});
 
 watch(
@@ -150,8 +154,8 @@ const openUpdateDish = row => {
   });
 };
 
-const openCommentDish = row => {
-  addCommentFormRef.value.open(row.id);
+const openDishComment = row => {
+  commentRef.value.open(row);
 };
 </script>
 
