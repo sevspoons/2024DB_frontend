@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
           <img :src="title" class="avatar_title" @dragstart.prevent />
           <div class="text-center">
             <div class="block-color">
-              <!-- <div class="text-left">
+              <div class="text-left">
                 <el-button
                   size="default"
                   type="primary"
@@ -122,7 +122,7 @@ onBeforeUnmount(() => {
                   @click="show = !show"
                   >{{ show ? "去注册" : "去登录" }}</el-button
                 >
-              </div> -->
+              </div>
               <Motion>
                 <h2>{{ show ? "Login" : "Register" }}</h2>
               </Motion>
