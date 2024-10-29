@@ -29,6 +29,15 @@ export default {
         title: "总览",
         showLink: true
       }
+    },
+    {
+      path: "/userInfo",
+      name: "userInfo",
+      component: () => import("@/views/userInfo/index.vue"),
+      meta: {
+        title: "个人信息",
+        showLink: true
+      }
     }
   ]
 } satisfies RouteConfigsTable;
