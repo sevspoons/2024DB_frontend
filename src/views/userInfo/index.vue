@@ -12,7 +12,9 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <InfoTable class="table" />
+        <div>
+          <InfoTable class="InfoTable" />
+        </div>
       </el-col>
     </el-row>
     <el-row>
@@ -24,15 +26,23 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span="24">
+        <div>
+          <mealRecords class="InfoTable" />
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
 import InfoTable from "./component/InfoTable.vue";
+import mealRecords from "./component/mealRecords.vue";
 </script>
 
 <style scoped lang="scss">
-:deep(.table) {
+:deep(.InfoTable) {
   margin-bottom: 20px;
 }
 :deep(.welcome-card) {
@@ -50,5 +60,20 @@ import InfoTable from "./component/InfoTable.vue";
   background-color: #fff;
   border-radius: 6px;
   padding: 10px;
+}
+
+.scrollbar-demo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 4px;
+  background: var(--el-color-primary-light-9);
+  color: var(--el-color-primary);
+}
+.el-slider {
+  margin-top: 20px;
 }
 </style>
