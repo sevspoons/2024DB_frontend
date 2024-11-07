@@ -26,13 +26,45 @@ export type response<T> = {
 import { http } from "@/utils/http";
 import { baseUrlApi } from "./baseurl";
 
+// 获取菜品榜单
+export const getRank = (type: string): Promise<response<dishInfo[]>> => {
+  return http.request("get", baseUrlApi("rank/get/" + type));
+};
+
+// 获取菜品分页总览
+export type overviewConfig = {
+  config: {
+    canteen: string;
+    maxPrice: number;
+  };
+};
+export type overview = {
+  total: number;
+  dish: dishInfo[];
+};
+export const getOverviewByPage = (
+  curPage: number,
+  pageSize: number,
+  data: overviewConfig
+): Promise<response<overview>> => {
+  return http.request(
+    "post",
+    baseUrlApi("/info/getByCond/" + curPage + "/" + pageSize),
+    {
+      data
+    }
+  );
+};
+
+// 用id获取菜品详情
 export const getDishInfoById = (
   dishId: number
 ): Promise<response<dishInfo>> => {
   return http.request("get", baseUrlApi("info/getById/" + dishId));
 };
 
-export const addDishInfoById = (data: dishInfo) => {
+//添加菜品信息
+export const addDishInfo = (data: dishInfo) => {
   return http.request("put", baseUrlApi("info/add"), { data });
 };
 

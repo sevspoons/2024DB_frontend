@@ -30,7 +30,9 @@
         <el-button @click="openAddDish">添加新菜品</el-button>
       </el-col>
     </el-row>
-    <el-divider><Chicken /></el-divider>
+    <el-divider>
+      <el-icon><Chicken /></el-icon>
+    </el-divider>
     <el-row>
       <el-col :span="24">
         <el-table :data="tableData" table-layout="auto" stripe>
@@ -67,7 +69,7 @@
     </el-row>
     <el-row>
       <el-pagination
-        v-model:current-page="tableConf.currentPage"
+        v-model:current-page="tableConf.curPage"
         v-model:page-size="tableConf.pageSize"
         layout="prev, pager, next, jumper"
         :total="total"
@@ -78,7 +80,7 @@
       ref="addDishInfoRef"
       class="add-dish-info-form"
       :init="getPaleDishInfo()"
-      :handelClick="addDishInfo"
+      :handelClick="addDish"
       btnText="添加"
     />
     <!-- 修改菜品信息表单 -->
@@ -105,7 +107,7 @@ import {
   dishInfoColums,
   canteenList,
   getDishInfo,
-  addDishInfo,
+  addDish,
   getPaleDishInfo,
   updateDish
 } from "./dataStore";
@@ -113,7 +115,7 @@ import { Chicken, EditPen, Comment } from "@element-plus/icons-vue";
 import dishInfoForm from "./dishInfoForm.vue";
 import comment from "./comment.vue";
 const tableConf = reactive({
-  currentPage: 1,
+  curPage: 1,
   pageSize: 10,
   canteen: "",
   maxPrice: null
@@ -138,8 +140,10 @@ onMounted(() => updateTable());
 const updateTable = () => {
   console.log("update table data!");
   getOverview(tableConf).then(res => {
-    tableData.value = res.data;
-    total.value = res.total;
+    res.data.dish.forEach(item => {
+      tableData.value.push(item);
+    });
+    total.value = res.data.total;
   });
 };
 

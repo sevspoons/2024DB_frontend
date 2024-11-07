@@ -9,7 +9,9 @@ const colors = ["#f85f73", "#00adb5", "#ff9a00"];
 onMounted(() => {
   // 获取最近一周的食物排行榜 插入到total_rank_datalist中
   getTotalRank().then(res => {
-    total_rank_datalist.value = res;
+    res.data.forEach(item => {
+      total_rank_datalist.value.push(item);
+    });
   });
 });
 </script>

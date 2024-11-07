@@ -1,5 +1,5 @@
 import type { dishInfo } from "@/api/common";
-import { getDishInfoById, addDishInfoById, updateDishInfo } from "@/api/common";
+import { getDishInfoById, addDishInfo, updateDishInfo } from "@/api/common";
 import { message } from "@/utils/message";
 
 export const dishInfoColums = [
@@ -41,8 +41,8 @@ export const getDishInfo = async (id: number): Promise<dishInfo> => {
     });
 };
 
-export const addDishInfo = (dishInfo: dishInfo) => {
-  addDishInfoById(dishInfo)
+export const addDish = (dishInfo: dishInfo) => {
+  addDishInfo(dishInfo)
     .then(() => {
       message("添加成功", { type: "success" });
     })
