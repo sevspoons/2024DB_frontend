@@ -5,7 +5,7 @@
         <h3>选择食堂</h3>
       </el-col>
       <el-col :span="4">
-        <el-select v-model="tableConf.canteen" style="width: 200px">
+        <el-select v-model="tableConf.canteen" style="width: 200px" clearable>
           <el-option
             v-for="(item, index) in canteenList"
             :key="index"

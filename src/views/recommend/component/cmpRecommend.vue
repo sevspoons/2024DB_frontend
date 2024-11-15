@@ -2,9 +2,9 @@
   <div class="cmp-wrapper" style="height: 40vh">
     <el-row>
       <h1 class="cmp-title">
-        <b style="color: #11999e">{{ "健康清淡" }}</b>
+        <b style="color: #11999e">{{ "性价比" }}</b>
         <b>{{ "      vs      " }}</b>
-        <b style="color: #88304e">{{ "麻辣鲜香" }}</b>
+        <b style="color: #88304e">{{ "量管饱" }}</b>
       </h1>
     </el-row>
     <el-row>
@@ -89,6 +89,7 @@ onMounted(() => {
 }
 .cmp-title {
   text-align: center;
+  font-size: 35px;
   width: 100vw;
   white-space: pre-wrap;
 }

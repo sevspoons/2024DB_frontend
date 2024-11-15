@@ -49,7 +49,7 @@ export const getOverviewByPage = (
 ): Promise<response<overview>> => {
   return http.request(
     "post",
-    baseUrlApi("/info/getByCond/" + curPage + "/" + pageSize),
+    baseUrlApi("info/getByCond/" + curPage + "/" + pageSize),
     {
       data
     }
@@ -85,3 +85,5 @@ export const getCommentsById = (
 ): Promise<response<commentInfo[]>> => {
   return http.request("put", baseUrlApi("comment/get/" + id));
 };
+
+export const getPersonalRecommend = () => {};
