@@ -19,6 +19,9 @@ onMounted(() => {
 <template>
   <div class="total-rank">
     <h2>最近一周BUAAer都在吃的:<b style="color: #ff9a00">TOP10</b></h2>
+    <p style="font-size: 12px; color: #1f1f1f">
+      我们北航们也有自己的<b style="color: #ff9a00">必吃榜</b>
+    </p>
     <br />
     <el-collapse v-model="total_rank_active" accordion>
       <el-collapse-item
@@ -81,7 +84,7 @@ onMounted(() => {
 .total-rank {
   background: linear-gradient(90deg, #f6416c, #11999e) no-repeat;
   background-size: 0% 4px;
-  background-position: 0 40px;
+  background-position: 0 60px;
   transition: background-size 0.5s;
   &:hover {
     background-size: 100% 4px;

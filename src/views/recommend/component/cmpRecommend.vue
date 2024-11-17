@@ -1,5 +1,11 @@
 <template>
   <div class="cmp-wrapper" style="height: 40vh">
+    <div class="tag-container left">
+      <img :src="tagCheap" alt="X昂贵" class="tag-pic" />
+    </div>
+    <div class="tag-container right">
+      <img :src="tagFull" alt="饱腹" class="tag-pic" />
+    </div>
     <el-row>
       <h1 class="cmp-title">
         <b style="color: #11999e">{{ "性价比" }}</b>
@@ -15,12 +21,12 @@
               <simpleChart :config="configL" />
             </div>
           </el-col>
-          <el-col :span="10" :offset="2">
+          <el-col :span="9" :offset="2">
             <div class="chart-text">
               <h2>
-                健康的BUAAer<br />对这几道菜给出<br /><b
-                  style="font-size: 45px; color: #6e7955"
-                  >好评!</b
+                精打细算<br />长久之道<br />这几道菜<br /><b
+                  style="font-size: 30px; color: #6e7955"
+                  >性价比拉满!</b
                 >
               </h2>
             </div>
@@ -38,9 +44,9 @@
             <el-col :span="12">
               <div class="chart-text">
                 <h2>
-                  无辣不欢?<br />无肉不香?<br /><b
-                    style="font-size: 45px; color: #752100"
-                    >看这里!</b
+                  评估性价比?<br />均衡健康搭配?<br />花里胡哨<br /><b
+                    style="font-size: 30px; color: #752100"
+                    >关键,得吃饱!</b
                   >
                 </h2>
               </div>
@@ -56,6 +62,8 @@
 import { ref, onMounted } from "vue";
 import simpleChart from "@/components/simpleChart.vue";
 import useRecommendChartConf from "./cmpRecommendChartConf";
+import tagCheap from "@/assets/dishTag/昂贵x.png";
+import tagFull from "@/assets/dishTag/饱腹.png";
 const configL = ref({});
 const configR = ref({});
 onMounted(() => {
@@ -97,5 +105,14 @@ onMounted(() => {
   margin-top: 50px;
   text-align: center;
   align-items: center;
+}
+.tag-container.left {
+  float: left;
+}
+.tag-container.right {
+  float: right;
+}
+.tag-pic {
+  height: 30px;
 }
 </style>

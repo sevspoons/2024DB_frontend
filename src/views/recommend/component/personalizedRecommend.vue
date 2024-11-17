@@ -1,6 +1,7 @@
 <template>
   <div class="psr-wrapper">
     <h1 class="psr-title">个性化推荐</h1>
+    <p class="sub-title">依据你的评价历史生成,评价越多推荐越精准~</p>
     <el-divider>
       <el-icon :size="30"><Dessert /></el-icon>
     </el-divider>
@@ -48,6 +49,10 @@ import { Dessert } from "@element-plus/icons-vue";
     transition:
       font-size 0.3s,
       color 0.3s;
+  }
+  .sub-title {
+    font-size: 15px;
+    color: #666;
   }
   &:hover {
     .psr-title {

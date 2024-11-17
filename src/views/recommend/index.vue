@@ -2,10 +2,12 @@
 import totalRank from "./component/totalRank.vue";
 import cmpRecommend from "./component/cmpRecommend.vue";
 import personalizedRecommend from "./component/personalizedRecommend.vue";
+import Cook from "@/assets/cook.gif";
 </script>
 
 <template>
   <div class="recommend-wrapper">
+    <img :src="Cook" alt="cook" class="cook" />
     <el-row :gutter="20">
       <el-col :span="8">
         <el-card body-class="welcome-card">
@@ -49,5 +51,11 @@ import personalizedRecommend from "./component/personalizedRecommend.vue";
   background-color: #fff;
   border-radius: 6px;
   padding: 10px;
+}
+.cook {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 40px;
 }
 </style>
