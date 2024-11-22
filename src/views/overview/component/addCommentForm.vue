@@ -23,7 +23,7 @@
       <el-col :span="22">
         <el-form-item label="评价" :rules="notEmptyRule">
           <el-input
-            v-model="formModel.content"
+            v-model="formModel.comment"
             clearable
             maxlength="60"
             show-word-limit
@@ -57,7 +57,7 @@ const props = defineProps({
 const init = {
   rate: null,
   quantity: null,
-  content: ""
+  comment: ""
 };
 const formRef = ref<FormInstance>();
 const icons = [Chicken, Chicken, Chicken];

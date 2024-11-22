@@ -3,3 +3,5 @@
 // export const baseUrlApi = (url: string) => `${url}`;
 // server
 export const baseUrlApi = (url: string) => `/api/${url}`;
+// local
+// export const baseUrlApi = (url: string) => `/localApi/${url}`;

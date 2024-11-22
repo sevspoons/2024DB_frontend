@@ -83,7 +83,7 @@ export const addComment = (id: number, data: commentInfo) => {
 export const getCommentsById = (
   id: number
 ): Promise<response<commentInfo[]>> => {
-  return http.request("put", baseUrlApi("comment/get/" + id));
+  return http.request("get", baseUrlApi("comment/get/" + id));
 };
 
 export const getPersonalRecommend = () => {};

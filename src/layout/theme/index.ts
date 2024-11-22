@@ -10,11 +10,11 @@ const themeColors = {
   light: {
     subMenuActiveText: "#000000d9",
     menuBg: "#8785a2",
-    menuHover: "#1212ff",
+    menuHover: "#8785a2",
     subMenuBg: "#ffe2e2",
-    subMenuActiveBg: "#1212ff",
+    subMenuActiveBg: "#8785a2",
     menuText: "#fff",
-    sidebarLogo: "#1212ff",
+    sidebarLogo: "#8785a2",
     menuTitleHover: "#000",
     menuActiveBefore: "#ffc7c7"
   },

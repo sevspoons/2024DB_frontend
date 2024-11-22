@@ -52,8 +52,8 @@ export const addDish = (dishInfo: dishInfo) => {
     });
 };
 
-export const updateDish = (dishInfo: dishInfo) => {
-  updateDishInfo(dishInfo.id, dishInfo)
+export const updateDish = async (dishInfo: dishInfo) => {
+  await updateDishInfo(dishInfo.id, dishInfo)
     .then(() => {
       message("更新成功", { type: "success" });
     })

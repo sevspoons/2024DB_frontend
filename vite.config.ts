@@ -30,6 +30,12 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
           target: "http://47.94.132.118:8080",
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, "")
+        },
+        "/localApi": {
+          // 这里填写本地地址
+          target: "http://localhost:8080",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/localApi/, "")
         }
       },
       // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布

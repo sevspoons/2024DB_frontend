@@ -121,6 +121,7 @@ const handelClear = (formEl: FormInstance | undefined) => {
 
 //expose func
 const open = () => {
+  formModel.value = cloneDeep(props.init);
   dialogEnable.value = true;
 };
 defineExpose({

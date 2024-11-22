@@ -90,8 +90,9 @@
       :init="dishInfoId"
       :handelClick="
         dishInfo => {
-          updateDish(dishInfo);
-          updateTable();
+          updateDish(dishInfo).then(() => {
+            updateTable();
+          });
         }
       "
       btnText="修改"
@@ -130,9 +131,18 @@ const commentRef = ref(null);
 const dishInfoId = ref({});
 
 watch(
-  () => tableConf,
-  () => updateTable(),
-  { deep: true }
+  () => [tableConf.canteen, tableConf.maxPrice],
+  () => {
+    tableConf.curPage = 1;
+    updateTable();
+  }
+);
+
+watch(
+  () => tableConf.curPage,
+  () => {
+    updateTable();
+  }
 );
 
 onMounted(() => updateTable());
@@ -140,6 +150,7 @@ onMounted(() => updateTable());
 const updateTable = () => {
   console.log("update table data!");
   getOverview(tableConf).then(res => {
+    tableData.value = [];
     res.data.dish.forEach(item => {
       tableData.value.push(item);
     });

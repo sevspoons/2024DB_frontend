@@ -70,7 +70,11 @@ const openAddComment = () => {
 const getComments = (dishId: number) => {
   getCommentsById(dishId)
     .then(res => {
-      message("获取评论成功", { type: "success" });
+      if (res.data.length > 0) {
+        message("获取评论成功", { type: "success" });
+      } else {
+        message("暂无评论, 快来留下你的笔迹吧!", { type: "info" });
+      }
       commentList.value = res.data;
     })
     .catch(err => {
