@@ -16,6 +16,28 @@ export type commentInfo = {
   quantity: number; //菜品分量
 };
 
+export type canteenInfo = {
+  [zoneName: string]: {
+    //区域
+    id: number;
+    prop: undefined;
+    areas: {
+      [areaName: string]: {
+        //餐饮区
+        id: number;
+        prop: undefined;
+        canteens: {
+          [canteenName: string]: {
+            //窗口/商家
+            id: number;
+            prop: undefined;
+          };
+        };
+      };
+    };
+  };
+};
+
 export type response<T> = {
   //自动化生成相应数据类型
   code: number;
@@ -87,3 +109,11 @@ export const getCommentsById = (
 };
 
 export const getPersonalRecommend = () => {};
+
+export const getCanteenInfo = (): Promise<response<canteenInfo>> => {
+  return http.request("get", baseUrlApi("canteen/get"));
+};
+
+export const addCanteenInfo = (data: string) => {
+  return http.request("put", baseUrlApi("canteen/add/" + data));
+};
