@@ -16,6 +16,29 @@
             :label="item"
             :value="item"
           />
+          <template #footer>
+            <el-button
+              v-if="!isAdding"
+              text
+              bg
+              size="small"
+              @click="onAddOption"
+            >
+              Add an option
+            </el-button>
+            <template v-else>
+              <el-input
+                v-model="optionName"
+                class="option-input"
+                placeholder="input option name"
+                size="small"
+              />
+              <el-button type="primary" size="small" @click="onConfirm">
+                confirm
+              </el-button>
+              <el-button size="small" @click="clear">cancel</el-button>
+            </template>
+          </template>
         </el-select>
         <el-select
           v-model="tableConf.canteen.area"
@@ -132,7 +155,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch, onMounted, nextTick, computed } from "vue";
 import { getOverview } from "../api";
-import { getCanteenInfo } from "@/api/common";
+import { getCanteenInfo, addCanteenInfo } from "@/api/common";
 import type { canteenInfo } from "@/api/common";
 import {
   dishInfoColumns,
@@ -237,6 +260,25 @@ const canteenList = computed(() => {
     canteenData[tableConf.canteen.zone].areas[tableConf.canteen.area];
   return Object.keys(area.canteens);
 });
+
+const isAdding = ref(false);
+const value = ref([]);
+const optionName = ref("");
+const onAddOption = () => {
+  isAdding.value = true;
+};
+
+const onConfirm = () => {
+  addCanteenInfo(optionName.value).then(() => {
+    loadCanteenInfo();
+    clear();
+  });
+};
+
+const clear = () => {
+  optionName.value = "";
+  isAdding.value = false;
+};
 </script>
 
 <style scoped lang="scss"></style>
