@@ -4,8 +4,36 @@
       <el-col :span="2">
         <h3>选择食堂</h3>
       </el-col>
-      <el-col :span="4">
-        <el-select v-model="tableConf.canteen" style="width: 200px" clearable>
+      <el-col :span="10">
+        <el-select
+          v-model="tableConf.canteen.zone"
+          style="width: 150px; margin-right: 10px"
+          clearable
+        >
+          <el-option
+            v-for="(item, index) in zoneList"
+            :key="index"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+        <el-select
+          v-model="tableConf.canteen.area"
+          style="width: 150px; margin-right: 10px"
+          clearable
+        >
+          <el-option
+            v-for="(item, index) in areaList"
+            :key="index"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+        <el-select
+          v-model="tableConf.canteen.canteen"
+          style="width: 150px"
+          clearable
+        >
           <el-option
             v-for="(item, index) in canteenList"
             :key="index"
@@ -26,7 +54,7 @@
           @blur="tableConf.maxPrice = maxPrice"
         />
       </el-col>
-      <el-col :span="3" :offset="8">
+      <el-col :span="3" :offset="3">
         <el-button @click="openAddDish">添加新菜品</el-button>
       </el-col>
     </el-row>
@@ -37,7 +65,7 @@
       <el-col :span="24">
         <el-table :data="tableData" table-layout="auto" stripe>
           <el-table-column
-            v-for="(item, index) in dishInfoColums"
+            v-for="(item, index) in dishInfoColumns"
             :key="index"
             :prop="item.prop"
             :label="item.label"
@@ -102,11 +130,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, onMounted, nextTick } from "vue";
+import { reactive, ref, watch, onMounted, nextTick, computed } from "vue";
 import { getOverview } from "../api";
+import { getCanteenInfo } from "@/api/common";
+import type { canteenInfo } from "@/api/common";
 import {
-  dishInfoColums,
-  canteenList,
+  dishInfoColumns,
   getDishInfo,
   addDish,
   getPaleDishInfo,
@@ -118,10 +147,15 @@ import comment from "./comment.vue";
 const tableConf = reactive({
   curPage: 1,
   pageSize: 10,
-  canteen: "",
+  canteen: {
+    zone: null,
+    area: null,
+    canteen: null
+  },
   maxPrice: null
 });
 import { message } from "@/utils/message";
+import { isNull } from "util";
 const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
@@ -145,7 +179,10 @@ watch(
   }
 );
 
-onMounted(() => updateTable());
+onMounted(() => {
+  updateTable();
+  loadCanteenInfo();
+});
 
 const updateTable = () => {
   console.log("update table data!");
@@ -172,6 +209,34 @@ const openUpdateDish = row => {
 const openDishComment = row => {
   commentRef.value.open(row);
 };
+
+var canteenData: canteenInfo;
+const loadCanteenInfo = () => {
+  getCanteenInfo()
+    .then(res => {
+      canteenData = res.data;
+      zoneList.value = Object.keys(canteenData);
+    })
+    .catch(err => {
+      message("获取食堂信息失败", { type: "error" });
+    });
+};
+
+const zoneList = ref([]);
+const areaList = computed(() => {
+  if (tableConf.canteen.zone == null) {
+    return [];
+  }
+  return Object.keys(canteenData[tableConf.canteen.zone].areas);
+});
+const canteenList = computed(() => {
+  if (tableConf.canteen.zone == null || tableConf.canteen.area == null) {
+    return [];
+  }
+  const area =
+    canteenData[tableConf.canteen.zone].areas[tableConf.canteen.area];
+  return Object.keys(area.canteens);
+});
 </script>
 
 <style scoped lang="scss"></style>

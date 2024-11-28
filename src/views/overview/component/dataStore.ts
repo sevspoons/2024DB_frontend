@@ -2,7 +2,7 @@ import type { dishInfo } from "@/api/common";
 import { getDishInfoById, addDishInfo, updateDishInfo } from "@/api/common";
 import { message } from "@/utils/message";
 
-export const dishInfoColums = [
+export const dishInfoColumns = [
   { prop: "name", label: "菜名" },
   { prop: "type", label: "菜系" },
   { prop: "price", label: "价格" },
@@ -11,8 +11,6 @@ export const dishInfoColums = [
   { prop: "canteen", label: "食堂" },
   { prop: "content", label: "简介" }
 ];
-
-export const canteenList = ["食堂A", "食堂B", "食堂C", "食堂D"];
 
 export const getPaleDishInfo = (): dishInfo => {
   return {

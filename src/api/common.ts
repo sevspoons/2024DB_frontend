@@ -17,17 +17,17 @@ export type commentInfo = {
 };
 
 export type canteenInfo = {
-  [zoneName: string]: {
+  [key: string]: {
     //区域
     id: number;
     prop: undefined;
     areas: {
-      [areaName: string]: {
+      [key: string]: {
         //餐饮区
         id: number;
         prop: undefined;
         canteens: {
-          [canteenName: string]: {
+          [key: string]: {
             //窗口/商家
             id: number;
             prop: undefined;
@@ -108,7 +108,9 @@ export const getCommentsById = (
   return http.request("get", baseUrlApi("comment/get/" + id));
 };
 
-export const getPersonalRecommend = () => {};
+export const getPersonalRecommend = () => {
+  return http.request("get", baseUrlApi("other/personalRecommend"));
+};
 
 export const getCanteenInfo = (): Promise<response<canteenInfo>> => {
   return http.request("get", baseUrlApi("canteen/get"));
