@@ -6,14 +6,20 @@
       </el-col>
       <el-col :span="10">
         <el-select
-          v-model="tableConf.canteen.zone"
+          v-for="(type, index) in ['zone', 'area', 'canteen']"
+          :key="index"
+          v-model="tableConf.canteen[type]"
           style="width: 150px; margin-right: 10px"
           clearable
         >
           <el-option
-            v-for="(item, index) in zoneList"
+            v-for="(item, index) in type == 'zone'
+              ? zoneList
+              : type == 'area'
+                ? areaList
+                : canteenList"
             :key="index"
-            :label="item"
+            :label="item.name"
             :value="item"
           />
           <template #footer>
@@ -22,47 +28,34 @@
               text
               bg
               size="small"
-              @click="onAddOption"
+              @click="onAddOption(type)"
             >
-              Add an option
+              添加新条目
             </el-button>
             <template v-else>
               <el-input
                 v-model="optionName"
                 class="option-input"
-                placeholder="input option name"
+                placeholder="输入条目名"
                 size="small"
+                required
               />
-              <el-button type="primary" size="small" @click="onConfirm">
-                confirm
+              <el-checkbox
+                v-if="type == 'zone'"
+                v-model="inSchool"
+                label="校内"
+              />
+              <el-button
+                type="primary"
+                size="small"
+                style="margin-left: 50%"
+                @click="onConfirm(type)"
+              >
+                添加
               </el-button>
-              <el-button size="small" @click="clear">cancel</el-button>
+              <el-button size="small" @click="clear">取消</el-button>
             </template>
           </template>
-        </el-select>
-        <el-select
-          v-model="tableConf.canteen.area"
-          style="width: 150px; margin-right: 10px"
-          clearable
-        >
-          <el-option
-            v-for="(item, index) in areaList"
-            :key="index"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
-        <el-select
-          v-model="tableConf.canteen.canteen"
-          style="width: 150px"
-          clearable
-        >
-          <el-option
-            v-for="(item, index) in canteenList"
-            :key="index"
-            :label="item"
-            :value="item"
-          />
         </el-select>
       </el-col>
       <el-col :span="2">
@@ -178,7 +171,6 @@ const tableConf = reactive({
   maxPrice: null
 });
 import { message } from "@/utils/message";
-import { isNull } from "util";
 const tableData = ref([]);
 const maxPrice = ref(null);
 const total = ref(0);
@@ -188,11 +180,47 @@ const commentRef = ref(null);
 const dishInfoId = ref({});
 
 watch(
+  //跨级选中时更新父节点
+  () => tableConf.canteen,
+  () => {
+    if (tableConf.canteen.canteen != null) {
+      if (tableConf.canteen.area == null || tableConf.canteen.zone == null) {
+        canteenData.value.forEach(zone => {
+          zone.areas.forEach(area => {
+            area.canteens.forEach(canteen => {
+              if (canteen.id == tableConf.canteen.canteen.id) {
+                tableConf.canteen.area = area;
+                tableConf.canteen.zone = zone;
+                return;
+              }
+            });
+          });
+        });
+      }
+    } else if (
+      tableConf.canteen.area != null &&
+      tableConf.canteen.zone == null
+    ) {
+      canteenData.value.forEach(zone => {
+        zone.areas.forEach(area => {
+          if (area.id == tableConf.canteen.area.id) {
+            tableConf.canteen.zone = zone;
+            return;
+          }
+        });
+      });
+    }
+  },
+  { deep: true }
+);
+
+watch(
   () => [tableConf.canteen, tableConf.maxPrice],
   () => {
     tableConf.curPage = 1;
     updateTable();
-  }
+  },
+  { deep: true }
 );
 
 watch(
@@ -233,43 +261,98 @@ const openDishComment = row => {
   commentRef.value.open(row);
 };
 
-var canteenData: canteenInfo;
+var canteenData = ref([]);
 const loadCanteenInfo = () => {
   getCanteenInfo()
     .then(res => {
-      canteenData = res.data;
-      zoneList.value = Object.keys(canteenData);
+      canteenData.value = res.data.zones;
+      console.log(canteenData);
     })
     .catch(err => {
       message("获取食堂信息失败", { type: "error" });
     });
 };
-
-const zoneList = ref([]);
+//区域表
+const zoneList = computed(() => {
+  return canteenData.value;
+});
+//餐饮区表
 const areaList = computed(() => {
   if (tableConf.canteen.zone == null) {
-    return [];
+    const res = [];
+    zoneList.value.forEach(item => {
+      item.areas.forEach(area => {
+        res.push(area);
+      });
+    });
+    return res;
+  } else {
+    const zone = tableConf.canteen.zone;
+    return zone.areas;
   }
-  return Object.keys(canteenData[tableConf.canteen.zone].areas);
 });
+//窗口表
 const canteenList = computed(() => {
-  if (tableConf.canteen.zone == null || tableConf.canteen.area == null) {
-    return [];
+  if (tableConf.canteen.zone == null) {
+    //区域级没选择
+    const res = [];
+    zoneList.value.forEach(zone => {
+      zone.areas.forEach(area => {
+        area.canteens.forEach(canteen => {
+          res.push(canteen);
+        });
+      });
+    });
+    return res;
+  } else if (tableConf.canteen.area == null) {
+    //餐饮区级没选择
+    const zone = tableConf.canteen.zone;
+    const res = [];
+    zone.areas.forEach(area => {
+      area.canteens.forEach(canteen => {
+        res.push(canteen);
+      });
+    });
+    return res;
+  } else {
+    //都选择了
+    const area = tableConf.canteen.area;
+    return area.canteens;
   }
-  const area =
-    canteenData[tableConf.canteen.zone].areas[tableConf.canteen.area];
-  return Object.keys(area.canteens);
 });
 
 const isAdding = ref(false);
-const value = ref([]);
 const optionName = ref("");
-const onAddOption = () => {
-  isAdding.value = true;
+const inSchool = ref(true);
+const onAddOption = (type: string) => {
+  if (type == "area" && tableConf.canteen.zone == null) {
+    message("请先选择前置区域", { type: "warning" });
+  } else if (type == "canteen" && tableConf.canteen.area == null) {
+    message("请先选择前置餐饮区", { type: "warning" });
+  } else {
+    isAdding.value = true;
+  }
 };
 
-const onConfirm = () => {
-  addCanteenInfo(optionName.value).then(() => {
+const onConfirm = (type: string) => {
+  if (optionName.value == "") {
+    message("请输入条目名", { type: "warning" });
+    return;
+  }
+  let data = "";
+  if (type == "zone") {
+    data = optionName.value;
+  } else if (type == "area") {
+    data = tableConf.canteen.zone.name + "-" + optionName.value;
+  } else {
+    data =
+      tableConf.canteen.zone.name +
+      "-" +
+      tableConf.canteen.area.name +
+      "-" +
+      optionName.value;
+  }
+  addCanteenInfo(optionName.value, inSchool.value).then(() => {
     loadCanteenInfo();
     clear();
   });

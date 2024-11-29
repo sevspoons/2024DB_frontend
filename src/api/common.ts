@@ -17,25 +17,30 @@ export type commentInfo = {
 };
 
 export type canteenInfo = {
-  [key: string]: {
-    //区域
-    id: number;
-    prop: undefined;
-    areas: {
-      [key: string]: {
-        //餐饮区
-        id: number;
-        prop: undefined;
-        canteens: {
-          [key: string]: {
-            //窗口/商家
-            id: number;
-            prop: undefined;
-          };
-        };
-      };
-    };
-  };
+  zones: [
+    {
+      id: number;
+      name: string;
+      inschool: boolean;
+      popularity: number;
+      areas: [
+        {
+          id: number;
+          name: string;
+          zone: string;
+          canteens: [
+            {
+              id: number;
+              name: string;
+              area: string;
+              dishNum: number;
+              rate: number;
+            }
+          ];
+        }
+      ];
+    }
+  ];
 };
 
 export type response<T> = {
@@ -116,6 +121,9 @@ export const getCanteenInfo = (): Promise<response<canteenInfo>> => {
   return http.request("get", baseUrlApi("canteen/get"));
 };
 
-export const addCanteenInfo = (data: string) => {
-  return http.request("put", baseUrlApi("canteen/add/" + data));
+export const addCanteenInfo = (data: string, inschool: boolean) => {
+  return http.request(
+    "put",
+    baseUrlApi("canteen/add/" + data + "/" + inschool)
+  );
 };
