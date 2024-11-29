@@ -6,11 +6,14 @@
       </el-col>
       <el-col :span="10">
         <el-select
-          v-for="(type, index) in ['zone', 'area', 'canteen']"
-          :key="index"
+          v-for="(type, typeIndex) in ['zone', 'area', 'canteen']"
+          :key="typeIndex"
           v-model="tableConf.canteen[type]"
+          value-key="id"
           style="width: 150px; margin-right: 10px"
           clearable
+          filterable
+          @change="handleCanteenChange(type)"
         >
           <el-option
             v-for="(item, index) in type == 'zone'
@@ -179,40 +182,38 @@ const editDishInfoRef = ref(null);
 const commentRef = ref(null);
 const dishInfoId = ref({});
 
-watch(
-  //跨级选中时更新父节点
-  () => tableConf.canteen,
-  () => {
-    if (tableConf.canteen.canteen != null) {
-      if (tableConf.canteen.area == null || tableConf.canteen.zone == null) {
-        canteenData.value.forEach(zone => {
-          zone.areas.forEach(area => {
-            area.canteens.forEach(canteen => {
-              if (canteen.id == tableConf.canteen.canteen.id) {
-                tableConf.canteen.area = area;
-                tableConf.canteen.zone = zone;
-                return;
-              }
-            });
-          });
-        });
-      }
-    } else if (
-      tableConf.canteen.area != null &&
-      tableConf.canteen.zone == null
-    ) {
+const handleCanteenChange = (type: string) => {
+  if (type == "zone") {
+    tableConf.canteen.canteen = null;
+    tableConf.canteen.area = null;
+  } else if (type == "area") {
+    tableConf.canteen.canteen = null;
+  }
+  if (tableConf.canteen.canteen != null) {
+    if (tableConf.canteen.area == null || tableConf.canteen.zone == null) {
       canteenData.value.forEach(zone => {
         zone.areas.forEach(area => {
-          if (area.id == tableConf.canteen.area.id) {
-            tableConf.canteen.zone = zone;
-            return;
-          }
+          area.canteens.forEach(canteen => {
+            if (canteen.id == tableConf.canteen.canteen.id) {
+              tableConf.canteen.area = area;
+              tableConf.canteen.zone = zone;
+              return;
+            }
+          });
         });
       });
     }
-  },
-  { deep: true }
-);
+  } else if (tableConf.canteen.area != null && tableConf.canteen.zone == null) {
+    canteenData.value.forEach(zone => {
+      zone.areas.forEach(area => {
+        if (area.id == tableConf.canteen.area.id) {
+          tableConf.canteen.zone = zone;
+          return;
+        }
+      });
+    });
+  }
+};
 
 watch(
   () => [tableConf.canteen, tableConf.maxPrice],
@@ -352,7 +353,8 @@ const onConfirm = (type: string) => {
       "-" +
       optionName.value;
   }
-  addCanteenInfo(optionName.value, inSchool.value).then(() => {
+  addCanteenInfo(data, inSchool.value).then(() => {
+    nextTick();
     loadCanteenInfo();
     clear();
   });
