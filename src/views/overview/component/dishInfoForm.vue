@@ -15,6 +15,7 @@
               maxlength="10"
               show-word-limit
               autofocus
+              :disabled="props.canteenInfo == null"
             />
           </el-form-item>
         </el-col>
@@ -25,14 +26,29 @@
               clearable
               maxlength="5"
               show-word-limit
+              :disabled="props.canteenInfo == null"
             />
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row v-if="!props.canteenInfo">
         <el-form-item label="位置" prop="canteen" :rules="notEmptyRule">
-          <el-input v-model="formModel.canteen" clearable />
+          <el-input v-model="formModel.canteen" clearable disabled />
         </el-form-item>
+      </el-row>
+      <el-row v-else>
+        <el-col :span="10">
+          <el-form-item label="位置" prop="canteen" :rules="notEmptyRule">
+            <el-select v-model="formModel.canteen" filterable>
+              <el-option
+                v-for="(item, index) in props.canteenInfo"
+                :key="index"
+                :label="item.name"
+                :value="item"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row>
         <el-form-item label="价格" prop="price" :rules="notEmptyRule">
@@ -92,7 +108,8 @@ const colors = ["#f85f73", "#00adb5", "#ff9a00"];
 const props = defineProps({
   init: {},
   handelClick: Function,
-  btnText: String
+  btnText: String,
+  canteenInfo: []
 });
 
 const dialogEnable = ref(false);

@@ -129,6 +129,7 @@
       :init="getPaleDishInfo()"
       :handelClick="addDish"
       btnText="添加"
+      :canteen-info="canteenList"
     />
     <!-- 修改菜品信息表单 -->
     <dishInfoForm
@@ -267,7 +268,7 @@ const loadCanteenInfo = () => {
   getCanteenInfo()
     .then(res => {
       canteenData.value = res.data.zones;
-      console.log(canteenData);
+      console.log(canteenData.value);
     })
     .catch(err => {
       message("获取食堂信息失败", { type: "error" });
@@ -354,7 +355,6 @@ const onConfirm = (type: string) => {
       optionName.value;
   }
   addCanteenInfo(data, inSchool.value).then(() => {
-    nextTick();
     loadCanteenInfo();
     clear();
   });
