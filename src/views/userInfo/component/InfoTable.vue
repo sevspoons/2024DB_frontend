@@ -11,10 +11,7 @@
       align="center"
       label-align="center"
     >
-      <el-image
-        style="width: 100px; height: 100px"
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-      />
+      <el-image style="width: 100px; height: 100px" :src="userInfo.avatar" />
     </el-descriptions-item>
     <el-descriptions-item
       :rowspan="2"
@@ -23,9 +20,8 @@
       label-align="center"
     >
       <el-input
-        v-model="username.username"
+        v-model="userInfo.nickname"
         style="width: 240px"
-        :disabled="true"
         placeholder="Please input"
       />
     </el-descriptions-item>
@@ -36,7 +32,7 @@
       label-align="center"
     >
       <el-input
-        v-model="username.telephone"
+        v-model="userInfo.phone"
         style="width: 240px"
         placeholder="Please input"
       />
@@ -48,7 +44,7 @@
       label-align="center"
     >
       <el-input
-        v-model="username.place"
+        v-model="userInfo.place"
         style="width: 240px"
         placeholder="Please input"
       />
@@ -59,7 +55,11 @@
       align="center"
       label-align="center"
     >
-      <el-tag size="small">School</el-tag>
+      <el-input
+        v-model="userInfo.tag"
+        style="width: 240px"
+        placeholder="Please input"
+      />
     </el-descriptions-item>
     <el-descriptions-item
       :rowspan="2"
@@ -68,22 +68,54 @@
       label-align="center"
     >
       <el-input
-        v-model="username.address"
+        v-model="userInfo.address"
         style="width: 240px"
         placeholder="Please input"
       />
     </el-descriptions-item>
   </el-descriptions>
+
+  <el-button
+    type="primary"
+    style="display: block; margin: 20px auto 0 auto"
+    @click="handleSubmit"
+  >
+    提交
+  </el-button>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { getUserInfo } from "@/api/userInfo";
 
-const username = ref({
-  username: "hello",
-  password: "12345678l",
-  telephone: "188xxxxxxxx",
-  place: "BeiJing",
-  address: "No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Provinc"
+// 用于存储用户信息的对象
+const userInfo = ref({
+  avatar: "",
+  nickname: "",
+  address: "",
+  phone: "",
+  tag: "",
+  place: ""
 });
+
+// 在组件挂载时调用后端 API 获取用户信息
+onMounted(async () => {
+  try {
+    const response = await getUserInfo();
+    if (response.success) {
+      // 将获取到的用户信息赋值给 userInfo
+      userInfo.value = response.data;
+    } else {
+      alert("获取用户信息失败");
+    }
+  } catch (error) {
+    console.error("获取用户信息失败:", error);
+    alert("获取用户信息失败");
+  }
+});
+
+const handleSubmit = () => {
+  console.log("提交的数据：", userInfo.value);
+  // 例如：postUserInfo(userInfo.value);
+};
 </script>
