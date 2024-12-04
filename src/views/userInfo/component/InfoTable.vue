@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { getUserInfo } from "@/api/userInfo";
+import { getUserInfo, putUserInfo } from "@/api/userInfo";
 
 // 用于存储用户信息的对象
 const userInfo = ref({
@@ -114,8 +114,18 @@ onMounted(async () => {
   }
 });
 
-const handleSubmit = () => {
-  console.log("提交的数据：", userInfo.value);
-  // 例如：postUserInfo(userInfo.value);
+const handleSubmit = async () => {
+  try {
+    console.log("提交的数据：", userInfo.value);
+    const res = await putUserInfo(userInfo.value); // 使用 await 等待异步返回结果
+    if (res.success) {
+      alert("修改用户信息成功");
+    } else {
+      alert("修改用户信息失败");
+    }
+  } catch (error) {
+    console.error("修改失败:", error);
+    alert("修改失败，请稍后再试");
+  }
 };
 </script>
