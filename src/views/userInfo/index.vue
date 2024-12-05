@@ -2,7 +2,11 @@
   <div class="recommend-wrapper">
     <section class="card-section">
       <CardHeader title="个人信息" description="在此留下你的足迹" />
-      <InfoTable class="InfoTable" />
+      <el-row :gutter="20" style="margin-top: 20px">
+        <el-col :span="24">
+          <InfoTable class="InfoTable" />
+        </el-col>
+      </el-row>
     </section>
 
     <section class="card-section">
