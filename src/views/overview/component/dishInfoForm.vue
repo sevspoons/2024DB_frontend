@@ -44,7 +44,7 @@
                 v-for="(item, index) in props.canteenInfo"
                 :key="index"
                 :label="item.name"
-                :value="item"
+                :value="item.name"
               />
             </el-select>
           </el-form-item>

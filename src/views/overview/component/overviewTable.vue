@@ -127,7 +127,13 @@
       ref="addDishInfoRef"
       class="add-dish-info-form"
       :init="getPaleDishInfo()"
-      :handelClick="addDish"
+      :handelClick="
+        dishInfo => {
+          addDish(dishInfo).then(() => {
+            updateTable();
+          });
+        }
+      "
       btnText="添加"
       :canteen-info="canteenList"
     />
