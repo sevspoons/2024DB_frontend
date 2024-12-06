@@ -19,19 +19,14 @@ export type responseput = {
 };
 
 import { http } from "@/utils/http";
-// import { baseUrlApi } from "./baseurl";
+import { baseUrlApi } from "./baseurl";
 
 export const getUserInfo = (): Promise<responseget<userInfo>> => {
-  return http.request(
-    "get",
-    "http://127.0.0.1:4523/m1/5193970-4859780-default/user/getInfo"
-  );
+  return http.request<responseget<userInfo>>("get", baseUrlApi("user/getInfo"));
 };
 
 export const putUserInfo = (userInfo: userInfo): Promise<responseput> => {
-  return http.request(
-    "put",
-    "http://127.0.0.1:4523/m1/5193970-4859780-default/user/updateInfo",
-    { data: userInfo }
-  );
+  return http.request<responseput>("put", baseUrlApi("user/updateInfo"), {
+    data: { data: userInfo }
+  });
 };

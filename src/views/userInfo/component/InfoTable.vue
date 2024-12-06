@@ -124,6 +124,7 @@ const handleSubmit = async () => {
       alert("修改用户信息失败");
     }
   } catch (error) {
+    console.log("提交的数据：", userInfo.value);
     console.error("修改失败:", error);
     alert("修改失败，请稍后再试");
   }

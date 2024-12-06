@@ -7,7 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+
 const HistoryList = ref([
   "炒饭",
   "炒面",
@@ -16,6 +17,23 @@ const HistoryList = ref([
   "冰",
   "整个人都飞起来了"
 ]);
+
+// const HistoryList = ref<string[]>([]); // 初始化为空数组
+
+// onMounted(async () => {
+//   try {
+//     const response = await getUserInfo();
+//     if (response.success) {
+//       // 将获取到的用户信息赋值给 userInfo
+//       HistoryList.value = response.data;
+//     } else {
+//       alert("获取用户信息失败");
+//     }
+//   } catch (error) {
+//     console.error("获取用户信息失败:", error);
+//     alert("获取用户信息失败");
+//   }
+// });
 </script>
 
 <style scoped>
