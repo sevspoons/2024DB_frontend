@@ -378,7 +378,12 @@ const onConfirm = (type: string) => {
   }
   addCanteenInfo(data, inSchool.value).then(() => {
     clear();
-    window.location.reload();
+    tableConf.canteen = {
+      zone: null,
+      area: null,
+      canteen: null
+    };
+    loadCanteenInfo();
   });
 };
 
