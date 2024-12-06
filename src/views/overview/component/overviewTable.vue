@@ -68,7 +68,7 @@
         <el-input
           v-model="maxPrice"
           type="number"
-          placeholder="请输入预算最大价格"
+          placeholder="不超过价格"
           style="width: 200px"
           @blur="tableConf.maxPrice = maxPrice"
         />
@@ -379,6 +379,7 @@ const onConfirm = (type: string) => {
   addCanteenInfo(data, inSchool.value).then(() => {
     clear();
     tableConf.canteen = {
+      //重置就餐区域选项
       zone: null,
       area: null,
       canteen: null
