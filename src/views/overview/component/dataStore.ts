@@ -40,7 +40,7 @@ export const getDishInfo = async (id: number): Promise<dishInfo> => {
 };
 
 export const addDish = (dishInfo: dishInfo) => {
-  addDishInfo(dishInfo)
+  return addDishInfo(dishInfo)
     .then(() => {
       message("添加成功", { type: "success" });
     })

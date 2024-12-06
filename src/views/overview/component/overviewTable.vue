@@ -127,7 +127,13 @@
       ref="addDishInfoRef"
       class="add-dish-info-form"
       :init="getPaleDishInfo()"
-      :handelClick="addDish"
+      :handelClick="
+        dishInfo => {
+          addDish(dishInfo).then(() => {
+            updateTable();
+          });
+        }
+      "
       btnText="添加"
       :canteen-info="canteenList"
     />
@@ -265,63 +271,76 @@ const openDishComment = row => {
 
 var canteenData = ref([]);
 const loadCanteenInfo = () => {
-  getCanteenInfo()
-    .then(res => {
-      canteenData.value = res.data.zones;
-      console.log(canteenData.value);
-    })
-    .catch(err => {
-      message("获取食堂信息失败", { type: "error" });
-    });
+  canteenData.value = []; //clear
+  nextTick(() => {
+    getCanteenInfo()
+      .then(res => {
+        canteenData.value = res.data.zones;
+        console.log(canteenData.value);
+      })
+      .catch(err => {
+        message("获取食堂信息失败", { type: "error" });
+      });
+  });
 };
 //区域表
 const zoneList = computed(() => {
   return canteenData.value;
 });
 //餐饮区表
-const areaList = computed(() => {
-  if (tableConf.canteen.zone == null) {
-    const res = [];
-    zoneList.value.forEach(item => {
-      item.areas.forEach(area => {
-        res.push(area);
+const areaList = ref([]);
+watch(
+  [tableConf.canteen, zoneList],
+  () => {
+    if (tableConf.canteen.zone == null) {
+      const res = [];
+      zoneList.value.forEach(item => {
+        item.areas.forEach(area => {
+          res.push(area);
+        });
       });
-    });
-    return res;
-  } else {
-    const zone = tableConf.canteen.zone;
-    return zone.areas;
-  }
-});
+      areaList.value = res;
+    } else {
+      const zone = tableConf.canteen.zone;
+      areaList.value = zone.areas;
+    }
+  },
+  { deep: true }
+);
 //窗口表
-const canteenList = computed(() => {
-  if (tableConf.canteen.zone == null) {
-    //区域级没选择
-    const res = [];
-    zoneList.value.forEach(zone => {
+const canteenList = ref([]);
+watch(
+  [tableConf.canteen, zoneList, areaList],
+  () => {
+    if (tableConf.canteen.zone == null) {
+      //区域级没选择
+      const res = [];
+      zoneList.value.forEach(zone => {
+        zone.areas.forEach(area => {
+          area.canteens.forEach(canteen => {
+            res.push(canteen);
+          });
+        });
+      });
+      canteenList.value = res;
+    } else if (tableConf.canteen.area == null) {
+      //餐饮区级没选择
+      const zone = tableConf.canteen.zone;
+      const res = [];
       zone.areas.forEach(area => {
         area.canteens.forEach(canteen => {
           res.push(canteen);
         });
       });
-    });
-    return res;
-  } else if (tableConf.canteen.area == null) {
-    //餐饮区级没选择
-    const zone = tableConf.canteen.zone;
-    const res = [];
-    zone.areas.forEach(area => {
-      area.canteens.forEach(canteen => {
-        res.push(canteen);
-      });
-    });
-    return res;
-  } else {
-    //都选择了
-    const area = tableConf.canteen.area;
-    return area.canteens;
-  }
-});
+      canteenList.value = res;
+    } else {
+      //都选择了
+      const area = tableConf.canteen.area;
+      canteenList.value = area.canteens;
+    }
+  },
+  { deep: true }
+);
 
 const isAdding = ref(false);
 const optionName = ref("");
@@ -344,8 +363,10 @@ const onConfirm = (type: string) => {
   let data = "";
   if (type == "zone") {
     data = optionName.value;
+    tableConf.canteen.zone = null;
   } else if (type == "area") {
     data = tableConf.canteen.zone.name + "-" + optionName.value;
+    tableConf.canteen.area = null;
   } else {
     data =
       tableConf.canteen.zone.name +
@@ -353,10 +374,11 @@ const onConfirm = (type: string) => {
       tableConf.canteen.area.name +
       "-" +
       optionName.value;
+    tableConf.canteen.canteen = null;
   }
   addCanteenInfo(data, inSchool.value).then(() => {
-    loadCanteenInfo();
     clear();
+    window.location.reload();
   });
 };
 
