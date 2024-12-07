@@ -377,12 +377,7 @@ const onConfirm = (type: string) => {
   }
   addCanteenInfo(data, inSchool.value).then(() => {
     clear();
-    tableConf.canteen = {
-      //重置就餐区域选项
-      zone: null,
-      area: null,
-      canteen: null
-    };
+    window.location.reload();
     loadCanteenInfo();
   });
 };
