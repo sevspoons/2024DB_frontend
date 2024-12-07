@@ -7,8 +7,8 @@ const config = {
     trigger: "axis",
     axisPointer: { type: "shadow" }
   },
-  grid: { left: "15%", right: "20%" },
-  xAxis: { name: "评分" },
+  grid: { left: "25%", right: "20%" },
+  xAxis: { name: "" },
   yAxis: { type: "category" },
   visualMap: {
     orient: "horizontal",
@@ -18,7 +18,7 @@ const config = {
     // Map the score column to color
     dimension: 0,
     inRange: {
-      color: ["#65B581", "#FD665F"]
+      color: ["#FD665F", "#65B581"]
     }
   },
   series: [
@@ -34,9 +34,10 @@ const config = {
   ]
 };
 
-const useRecommendChartConf = dataset => {
+const useRecommendChartConf = (dataset, type) => {
   const tmp = cloneDeep(config);
   tmp.dataset.source = dataset;
+  tmp.xAxis.name = type;
   return tmp;
 };
 

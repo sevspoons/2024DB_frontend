@@ -64,19 +64,25 @@ import simpleChart from "@/components/simpleChart.vue";
 import useRecommendChartConf from "./cmpRecommendChartConf";
 import tagCheap from "@/assets/dishTag/昂贵x.png";
 import tagFull from "@/assets/dishTag/饱腹.png";
+import { getPriceRank, getQuantityRank } from "@/views/recommend/api";
+import { get } from "sortablejs";
 const configL = ref({});
 const configR = ref({});
 onMounted(() => {
-  configL.value = useRecommendChartConf([
-    [2, "菜品1"],
-    [3.5, "菜品2"],
-    [5, "菜品3"]
-  ]);
-  configR.value = useRecommendChartConf([
-    [3.7, "菜品4"],
-    [4.8, "菜品5"],
-    [4.9, "菜品6"]
-  ]);
+  getPriceRank().then(res => {
+    const data = [];
+    res.data.forEach(item => {
+      data.push([item.price, item.name]);
+    });
+    configL.value = useRecommendChartConf(data, "价格");
+  });
+  getQuantityRank().then(res => {
+    const data = [];
+    res.data.forEach(item => {
+      data.push([item.quantity, item.name]);
+    });
+    configR.value = useRecommendChartConf(data, "份量");
+  });
 });
 </script>
 
