@@ -43,6 +43,13 @@ export type canteenInfo = {
   ];
 };
 
+export type pRecInfo = {
+  rec1: dishInfo;
+  rec2: dishInfo;
+  rec3: dishInfo;
+  recent: dishInfo;
+};
+
 export type response<T> = {
   //自动化生成相应数据类型
   code: number;
@@ -113,7 +120,7 @@ export const getCommentsById = (
   return http.request("get", baseUrlApi("comment/get/" + id));
 };
 
-export const getPersonalRecommend = () => {
+export const getPersonalRecommend = (): Promise<response<pRecInfo>> => {
   return http.request("get", baseUrlApi("other/personalRecommend"));
 };
 

@@ -71,16 +71,22 @@ const configR = ref({});
 onMounted(() => {
   getPriceRank().then(res => {
     const data = [];
-    res.data.forEach(item => {
-      data.push([item.price, item.name]);
+    res.data.forEach((item, index) => {
+      if (index < 3) {
+        data.push([item.price, item.name]);
+      }
     });
-    configL.value = useRecommendChartConf(data, "价格");
+    data.reverse();
+    configL.value = useRecommendChartConf(data, "价格/元");
   });
   getQuantityRank().then(res => {
     const data = [];
-    res.data.forEach(item => {
-      data.push([item.quantity, item.name]);
+    res.data.forEach((item, index) => {
+      if (index < 3) {
+        data.push([item.quantity, item.name]);
+      }
     });
+    data.reverse();
     configR.value = useRecommendChartConf(data, "份量");
   });
 });

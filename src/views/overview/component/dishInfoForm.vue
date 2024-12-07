@@ -26,7 +26,6 @@
               clearable
               maxlength="5"
               show-word-limit
-              :disabled="props.canteenInfo == null"
             />
           </el-form-item>
         </el-col>
