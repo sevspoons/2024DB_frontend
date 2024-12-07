@@ -11,6 +11,7 @@ export type dishInfo = {
 };
 
 export type commentInfo = {
+  id: number; // ID
   comment: string; // 评论
   rate: number; // 评分
   quantity: number; //菜品分量
@@ -118,6 +119,10 @@ export const getCommentsById = (
   id: number
 ): Promise<response<commentInfo[]>> => {
   return http.request("get", baseUrlApi("comment/get/" + id));
+};
+
+export const deleteCommentById = (id): Promise<response<canteenInfo>> => {
+  return http.request("delete", baseUrlApi("comment/get/" + id));
 };
 
 export const getPersonalRecommend = (): Promise<response<pRecInfo>> => {

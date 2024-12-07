@@ -12,23 +12,35 @@
       >
         <el-collapse-item :name="index">
           <template #title>
-            <el-row :gutter="3">
-              <el-col :span="2">
-                <h2>{{ index + 1 + ". " }}</h2>
-              </el-col>
-              <el-col :span="11">
-                <el-rate v-model="item.rate" disabled />
-              </el-col>
-              <el-col :span="11">
-                <el-rate
-                  v-model="item.quantity"
-                  :icons="icons"
-                  :void-icon="Chicken"
-                  :colors="colors"
-                  disabled
-                />
-              </el-col>
-            </el-row>
+            <div style="width: 100%">
+              <el-row :gutter="3">
+                <el-col :span="2">
+                  <h2>{{ index + 1 + ". " }}</h2>
+                </el-col>
+                <el-col :span="2">
+                  <el-rate v-model="item.rate" disabled />
+                </el-col>
+                <el-col :span="2" :offset="2">
+                  <el-rate
+                    v-model="item.quantity"
+                    :icons="icons"
+                    :void-icon="Chicken"
+                    :colors="colors"
+                    disabled
+                  />
+                </el-col>
+                <el-col :span="2" :offset="14">
+                  <el-button
+                    type="info"
+                    :icon="Delete"
+                    size="small"
+                    circle
+                    style="opacity: 0.5"
+                    @click="deleteComment(item.id)"
+                  />
+                </el-col>
+              </el-row>
+            </div>
           </template>
           <p style="font-size: 16px; margin-left: 10px">{{ item.comment }}</p>
         </el-collapse-item>
@@ -50,9 +62,9 @@
 import { ref } from "vue";
 import addCommentForm from "./addCommentForm.vue";
 import type { dishInfo, commentInfo } from "@/api/common";
-import { getCommentsById } from "@/api/common";
+import { getCommentsById, deleteCommentById } from "@/api/common";
 import { message } from "@/utils/message";
-import { Chicken } from "@element-plus/icons-vue";
+import { Chicken, Delete } from "@element-plus/icons-vue";
 
 const icons = [Chicken, Chicken, Chicken];
 const colors = ["#f85f73", "#00adb5", "#ff9a00"];
@@ -79,6 +91,22 @@ const getComments = (dishId: number) => {
     })
     .catch(err => {
       message("获取评论失败", { type: "error" });
+    });
+};
+
+const deleteComment = commentId => {
+  deleteCommentById(commentId)
+    .then(res => {
+      if (res.code == 200) {
+        console.log(res);
+        message("删除成功", { type: "success" });
+        refreshData();
+      } else {
+        message("您只能删除您自己的评论!", { type: "error" });
+      }
+    })
+    .catch(err => {
+      message("删除失败", { type: "error" });
     });
 };
 

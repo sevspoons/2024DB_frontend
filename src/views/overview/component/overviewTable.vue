@@ -276,7 +276,6 @@ const loadCanteenInfo = () => {
     getCanteenInfo()
       .then(res => {
         canteenData.value = res.data.zones;
-        console.log(canteenData.value);
       })
       .catch(err => {
         message("获取食堂信息失败", { type: "error" });
