@@ -8,32 +8,33 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { getUserHis } from "@/api/userInfo";
 
-const HistoryList = ref([
-  "炒饭",
-  "炒面",
-  "炒饼",
-  "炒棵",
-  "冰",
-  "整个人都飞起来了"
-]);
+// const HistoryList = ref([
+//   "炒饭",
+//   "炒面",
+//   "炒饼",
+//   "炒棵",
+//   "冰",
+//   "整个人都飞起来了"
+// ]);
 
-// const HistoryList = ref<string[]>([]); // 初始化为空数组
+const HistoryList = ref<string[]>([]); // 初始化为空数组
 
-// onMounted(async () => {
-//   try {
-//     const response = await getUserInfo();
-//     if (response.success) {
-//       // 将获取到的用户信息赋值给 userInfo
-//       HistoryList.value = response.data;
-//     } else {
-//       alert("获取用户信息失败");
-//     }
-//   } catch (error) {
-//     console.error("获取用户信息失败:", error);
-//     alert("获取用户信息失败");
-//   }
-// });
+onMounted(async () => {
+  try {
+    const response = await getUserHis();
+    if (response.success) {
+      // 将获取到的用户信息赋值给 userInfo
+      HistoryList.value = response.data;
+    } else {
+      alert("获取用户信息失败1");
+    }
+  } catch (error) {
+    console.error("获取用户信息失败:", error);
+    alert("获取用户历史失败");
+  }
+});
 </script>
 
 <style scoped>

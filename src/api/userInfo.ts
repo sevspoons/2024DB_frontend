@@ -7,6 +7,8 @@ export type userInfo = {
   place: string;
 };
 
+export type HistoryList = string[]; // 初始化为空数组
+
 export type responseget<T> = {
   //自动化生成相应数据类型
   success: boolean;
@@ -29,4 +31,11 @@ export const putUserInfo = (userInfo: userInfo): Promise<responseput> => {
   return http.request<responseput>("put", baseUrlApi("user/updateInfo"), {
     data: { data: userInfo }
   });
+};
+
+export const getUserHis = (): Promise<responseget<HistoryList>> => {
+  return http.request<responseget<HistoryList>>(
+    "get",
+    baseUrlApi("other/history")
+  );
 };
